@@ -23,8 +23,12 @@ class FormContainer extends Component {
     }
 
     onSubmit(e) {
-        e.preventDefaults()
-        
+        e.preventDefaults();
+
+        fetch('/api/trackers', {
+            method: 'POST',
+            body: JSON.stringify(this.state)
+        })
     }
     
     render() {
