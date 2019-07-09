@@ -17,7 +17,7 @@ class FormContainer extends Component {
     }
 
     onChange(e) {
-        this.setState = ({
+        this.setState({
             [e.target.name]: e.target.value
         })
     }
@@ -30,7 +30,7 @@ class FormContainer extends Component {
     render() {
         return (
             <React.Fragment>
-                <FormComponent state={[...this.state]} onSubmit={this.onSubmit} onChange={onChange} />
+                <FormComponent state={this.state} onSubmit={this.onSubmit} onChange={this.onChange} />
             </React.Fragment>
         )
     }
