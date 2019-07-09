@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const FormComponent = ({ state, onSubmit, onChange }) => {
     const { name, type, date_purchased, expire, price, where_purchased } = state;
@@ -30,4 +31,9 @@ const FormComponent = ({ state, onSubmit, onChange }) => {
     )
 }
 
+FormComponent.propTypes = {
+    state: PropTypes.object,
+    onSubmit: PropTypes.func,
+    onChange: PropTypes.func
+}
 export default FormComponent;
