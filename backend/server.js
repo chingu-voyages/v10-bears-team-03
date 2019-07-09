@@ -1,69 +1,84 @@
 const express = require('express');
-const fs = require('fs');
-const historyApiFallback = require('connect-history-api-fallback');
-const mongoose = require('mongoose');
-const path = require('path');
-const webpack = require('webpack');
-const webpackDevMiddleware = require('webpack-dev-middleware');
-const webpackHotMiddleware = require('webpack-hot-middleware');
-
-const config = require('../config/config');
-const webpackConfig = require('../webpack.config');
-
-const isDev = process.env.NODE_ENV !== 'production';
-const port  = process.env.PORT || 8080;
-
-
-// Configuration
-// ================================================================================================
-
-// Set up Mongoose
-mongoose.connect(isDev ? config.db_dev : config.db);
-mongoose.Promise = global.Promise;
-
 const app = express();
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const mongoose = require('mongoose');
 
-// API routes
-require('./routes')(app);
+const trackerRoutes = express.Router();
+const PORT = 4000;
 
-if (isDev) {
-  const compiler = webpack(webpackConfig);
+let Tracker = require('./models/Tracker');
 
-  app.use(historyApiFallback({
-    verbose: false
-  }));
+app.use(cors());
+app.use(bodyParser.json());
 
-  app.use(webpackDevMiddleware(compiler, {
-    publicPath: webpackConfig.output.publicPath,
-    contentBase: path.resolve(__dirname, '../client/public'),
-    stats: {
-      colors: true,
-      hash: false,
-      timings: true,
-      chunks: false,
-      chunkModules: false,
-      modules: false
-    }
-  }));
+mongoose.connect('mongodb://127.0.0.1:27017/tracker', { useNewUrlParser: true });
 
-  app.use(webpackHotMiddleware(compiler));
-  app.use(express.static(path.resolve(__dirname, '../dist')));
-} else {
-  app.use(express.static(path.resolve(__dirname, '../dist')));
-  app.get('*', function (req, res) {
-    res.sendFile(path.resolve(__dirname, '../dist/index.html'));
-    res.end();
-  });
-}
+const connection = mongoose.connection;
+connection.once('open', function() {
+    console.log("MongoDB database connection established successfully");
+})
 
-app.listen(port, '0.0.0.0', (err) => {
-  if (err) {
-    console.log(err);
-  }
-
-  console.info('>>> 🌎 Open http://0.0.0.0:%s/ in your browser.', port);
+//api endpoints starts
+//index
+trackerRoutes.route('/').get(function(req, res) {
+    Tracker.find(function(err, trackers) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.json(trackers);
+        }
+    });
 });
+//show
+trackerRoutes.route('/:id').get(function(req, res) {
+    let id = req.params.id;
+    Tracker.findById(id, function(err, trackers) {
+        res.json(trackers);
+    });
+});
+//add
+trackerRoutes.route('/add').post(function(req, res) {
+    let tracker = new Tracker(req.body);
+    tracker.save()
+        .then(tracker => {
+            res.status(200).json({'tracker': 'tracker added successfully'});
+        })
+        .catch(err => {
+            res.status(400).send('adding new tracker failed');
+        });
+});
+//update
+/*
+name: String,
+  type: String,
+  date_purchased: Date,
+  expire: Number,
+  price: Number,
+  where_purchased: String
+*/
+trackerRoutes.route('/update/:id').post(function(req, res) {
+    Tracker.findById(req.params.id, function(err, tracker) {
+        if (!tracker)
+            res.status(404).send("data is not found");
+        else
+            tracker.name = req.body.name;
+            tracker.date_purchased = req.body.date_purchased;
+            tracker.expire = req.body.expire;
+            tracker.price = req.body.price;
+            tracker.where_purchased = req.body.where_purchased;
+            
+            tracker.save().then(tracker => {
+                res.json('Tracker updated!');
+            })
+            .catch(err => {
+                res.status(400).send("Update not possible");
+            });
+    });
+});
+//api endpoint ends
+app.use('/trackers', trackerRoutes)
 
-module.exports = app;
+app.listen(PORT, function() {
+    console.log("Server is running on Port: " + PORT);
+});

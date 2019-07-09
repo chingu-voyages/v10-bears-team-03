@@ -1,11 +1,11 @@
 
 const mongoose = require('mongoose');
 
-const CounterSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
   name: String,
   username: String,
   password: String,
   dateCreated: Date
 });
 
-module.exports = mongoose.model('Counter', CounterSchema);
+module.exports = mongoose.model('User', UserSchema);
