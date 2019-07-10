@@ -146,9 +146,11 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Felix Chan ( https://github.com/chanfe )
-Ian Canino ( https://github.com/CaninoDev )
-Sue Anschutz ( https://github.com/SAnschutz )
+[Felix Chan](https://github.com/chanfe)
+
+[Ian Canino](https://github.com/CaninoDev)
+
+[Sue Anschutz](https://github.com/SAnschutz)
 
 Project Link: [https://github.com/chingu-voyages/v10-bears-team-03](https://github.com/chingu-voyages/v10-bears-team-03)
 
