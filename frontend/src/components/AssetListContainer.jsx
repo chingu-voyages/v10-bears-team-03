@@ -30,3 +30,5 @@ class AssetListContainer extends Component {
     }
 
 }
+
+export default AssetListContainer;
