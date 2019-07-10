@@ -1,0 +1,36 @@
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const mongoose = require('mongoose');
+
+// const trackerRoutes = express.Router();
+const PORT = 4000;
+
+
+const trackerRoutes = require('./routes/API/trackers');
+const userRoutes = require('./routes/API/users');
+
+mongoose.Promise = global.Promise;
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/tracker';
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true }).then(
+    () => {console.log('Database is connected') },
+    err => { console.log('Can not connect to the database'+ err)}
+  );
+
+const connection = mongoose.connection;
+connection.once('open', function() {
+    console.log("MongoDB database connection established successfully");
+})
+
+app.use(cors());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+
+app.use('/trackers', trackerRoutes)
+app.use('/users', userRoutes)
+
+
+app.listen(PORT, function() {
+    console.log("Server is running on Port: " + PORT);
+});
