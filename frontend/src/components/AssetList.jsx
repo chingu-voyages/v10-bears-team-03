@@ -8,7 +8,7 @@ function AssetList() {
         axios.get('/api/tracker')
             .then((response) => response.json())
             .then((responseObj) => setData(responseObj))
-    })
+    }, []);
 
     return (
         <table>
