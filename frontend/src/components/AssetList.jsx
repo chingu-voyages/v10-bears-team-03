@@ -5,9 +5,16 @@ function AssetList() {
     const [data, setData] = useState({ assets: [] });
 
     useEffect(() => {
-        axios.get('/api/tracker')
-            .then((response) => response.json())
-            .then((responseObj) => setData(responseObj))
+        const fetchData = async () => {
+            const response = await axios(
+                '/api/trackers',
+            );
+
+            setData(response.data);
+        }
+
+        fetchData();
+        
     }, []);
 
     return (
