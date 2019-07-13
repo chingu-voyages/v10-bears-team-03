@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const FormComponent = ({ state, onSubmit, onChange }) => {
-    const { name, type, date_purchased, expire, price, where_purchased } = state;
+const FormComponent = ({ asset, onSubmit, onChange }) => {
+    const { name, type, date_purchased, expire, price, where_purchased } = asset;
 
     return(
         <div>
@@ -36,4 +36,5 @@ FormComponent.propTypes = {
     onSubmit: PropTypes.func,
     onChange: PropTypes.func
 }
+
 export default FormComponent;
