@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const AssetsListComponent = ({assets, isLoading}) => {
+const AssetsListComponent = ({assets, onDelete}) => {
     return (
         <table>
             <thead>
@@ -21,6 +21,9 @@ const AssetsListComponent = ({assets, isLoading}) => {
                         <td>{asset.expire}</td>
                         <td>{asset.price}</td>
                         <td>{asset.where_purchased}</td>
+                        <td>
+                            <button onClick={() => onDelete(asset._id)} >Delete</button>
+                        </td>
                     </tr>))
                 }
             </tbody>
