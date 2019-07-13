@@ -1,0 +1,78 @@
+.landing-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 94vh;
+  width: 100vw;
+
+  &::before {
+    content: '';
+
+    background-image: url('../assets/images/markus-spiske-9iFMf03VyaM-unsplash.jpg');
+    position: absolute;
+    top: 4vh;
+    left: 0;
+    height: 96vh;
+    width: 100vw;
+    background-position: top left;
+    background-size: cover;
+    opacity: 0.4;
+    z-index: -2;
+  }
+
+  #landing-container-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4vh;
+    width: 100vw;
+    background: green;
+  }
+
+  .logo-container {
+    height: 25vh;
+    margin: 32vh 0 10vh 0;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 30vh;
+      width: 100vw;
+      z-index: 0;
+      background-color: white;
+      opacity: 0.3;
+    }
+  }
+
+  button {
+    display: block;
+    margin: 5vh auto;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid black;
+    outline: none;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.609);
+
+    &:hover {
+      transform: 0.3s;
+      transform: translate(-2px, -2px);
+      box-shadow: 2px 2px rgb(173, 171, 171);
+    }
+  }
+
+  a {
+    display: block;
+    color: rgb(70, 68, 68);
+
+    &:hover {
+      color: black;
+    }
+  }
+
+  .logo-title {
+    font-size: $title-font-size;
+  }
+}
