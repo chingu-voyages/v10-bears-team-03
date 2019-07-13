@@ -1,0 +1,21 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 6vh;
+  width: 100vw;
+  background: rgb(78, 74, 74);
+  text-align: right;
+
+  .navbar-link {
+    display: inline-block;
+    height: 6vh;
+    width: 150px;
+    color: white;
+    line-height: 3;
+    text-decoration: none;
+    &:hover {
+      color: rgb(173, 169, 169);
+    }
+  }
+}
