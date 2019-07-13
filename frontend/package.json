@@ -2,15 +2,13 @@
   "name": "tracker",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://localhost:8080",
+  "proxy": "http://127.0.0.1:4000",
   "dependencies": {
-<<<<<<< HEAD
     "axios": "^0.19.0",
-=======
     "prop-types": "^15.7.2",
->>>>>>> form
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1"
   },
   "scripts": {
