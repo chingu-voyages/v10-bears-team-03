@@ -1,10 +1,17 @@
 import React from 'react';
-import styles from './Landing.less';
+import { Link } from 'react-router-dom';
+
+import Logo from '../components/Logo';
+import Navbar from '../components/Navbar';
 
 const Landing = () => (
-  <div className={styles.LandingContainer}>
-    <div>
-      <h1>Landing page?</h1>
+  <div>
+    <div className='landing-container'>
+      <Navbar id='landing-container-navbar' />
+
+      <Logo />
+      <button>Log In To Your Account</button>
+      <Link to='#'>No Account? Create one here!</Link>
     </div>
   </div>
 );

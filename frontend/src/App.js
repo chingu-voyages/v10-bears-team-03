@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import '../src/styles/styles.scss';
+
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Landing from './components/Landing';
 import AssetsAndFormContainer from './components/AssetsAndFormContainer';

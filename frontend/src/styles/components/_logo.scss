@@ -1,0 +1,28 @@
+.logo-container {
+  position: relative;
+  height: 200px;
+  width: 100vw;
+  padding: 15px 0;
+  text-align: center;
+
+  img {
+    height: 100%;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .logo-text {
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: 2vw;
+
+    .logo-title {
+      font-family: 'Black Ops One', cursive;
+    }
+
+    .logo-subtitle {
+      font-size: 16px;
+      text-transform: uppercase;
+    }
+  }
+}
