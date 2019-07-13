@@ -7,24 +7,36 @@ const FormComponent = ({ asset, onSubmit, onChange }) => {
     return(
         <div>
             <form onSubmit={onSubmit}>
-                <label>Name:
-                    <input value={name} onChange={(e) => onChange(e)} />
-                </label>
-                <label>Type:
-                    <input value={type} onChange={(e) => onChange(e)} />
-                </label>
-                <label>Date Purchased:
-                    <input value={date_purchased} onChange={(e) => onChange(e)} />
-                </label>
-                <label>Expire:
-                    <input value={expire} onChange={(e) => onChange(e)} />
-                </label> 
-                <label>Price:
-                    <input value={price} onChange={(e) => onChange(e)} />
-                </label>
-                <label>Where Purchased:
-                    <input value={where_purchased} onChange={(e) => onChange(e)} />
-                </label> 
+                <div>
+                    <label>Name:
+                        <input name="name" value={name} onChange={onChange} />
+                    </label>
+                </div>
+                <div>
+                    <label>Type:
+                        <input name="type" value={type} onChange={onChange} />
+                    </label>
+                </div>
+                <div>
+                    <label>Date Purchased:
+                        <input name="date_purchased" value={date_purchased} onChange={onChange} />
+                    </label>
+                </div>
+                <div>
+                    <label>Expire:
+                        <input name="expire" value={expire} onChange={onChange} />
+                    </label> 
+                </div>
+                <div>
+                    <label>Price:
+                        <input name="price" value={price} onChange={onChange} />
+                    </label>
+                </div>
+                <div>
+                    <label>Where Purchased:
+                        <input name="where_purchased" value={where_purchased} onChange={onChange} />
+                    </label> 
+                </div>
                 <input type="submit" value="Submit" />
             </form>
         </div>

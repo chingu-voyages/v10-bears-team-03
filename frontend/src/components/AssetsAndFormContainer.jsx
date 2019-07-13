@@ -11,6 +11,7 @@ function AssetsAndFormContainer() {
     const [isLoading, setIsLoading] = useState(true);
 
     const onSubmit = (e) => {
+        console.log(asset);
         axios.post('/trackers/add', asset)
             .then((response) => console.log(response))
             .catch((error) => console.log(error))
@@ -19,7 +20,9 @@ function AssetsAndFormContainer() {
     }
 
     const onChange = (e) => {
-        setAsset({[e.target.name]: e.target.value})
+        e.persist()
+        setAsset(asset => ({...asset, [e.target.name]: e.target.value}));
+        console.log(asset);
     }
 
     useEffect(() => {
@@ -33,16 +36,16 @@ function AssetsAndFormContainer() {
             }
         })
             .then((response) => {
-                console.log(response.data);
                 setInventory(response.data)
             });
+
         setIsLoading(false);    
-    }, []);
+    }, [inventory]);
 
     return (
         <React.Fragment>
             <FormComponent asset={asset} onChange={onChange} onSubmit={onSubmit} />
-            <AssetsListComponent assets={inventory} isLoading={isLoading}/>
+            {!isLoading && <AssetsListComponent assets={inventory} />}
         </React.Fragment>
     )
 }
