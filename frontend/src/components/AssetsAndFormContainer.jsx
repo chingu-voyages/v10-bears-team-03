@@ -11,7 +11,6 @@ function AssetsAndFormContainer() {
     const [isLoading, setIsLoading] = useState(true);
 
     const onSubmit = (e) => {
-        console.log(asset);
         axios.post('/trackers/add', asset)
             .then((response) => console.log(response))
             .catch((error) => console.log(error))
@@ -22,30 +21,37 @@ function AssetsAndFormContainer() {
     const onChange = (e) => {
         e.persist()
         setAsset(asset => ({...asset, [e.target.name]: e.target.value}));
-        console.log(asset);
     }
 
-    useEffect(() => {
+    const onDelete = (_id) => {
+        axios.get(`/trackers/delete/${_id}`)
+            .then((response) => console.log(response))
+            .catch((error) => console.log(error));
 
-        axios('/trackers', {
-            method: 'GET',
-            mode: 'no-cors',
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Content-Type': 'application/json',
-            }
-        })
+        setIsLoading(true);
+
+        axios.get('/trackers')
+            .then((response) => setInventory(response.data))
+            .catch((error) => console.log(error));
+            
+        setIsLoading(false);
+    }
+
+  
+
+    useEffect(() => {
+        setIsLoading(true);
+        axios.get('/trackers')
             .then((response) => {
                 setInventory(response.data)
-            });
-
-        setIsLoading(false);    
+            })
+        setIsLoading(false);
     }, [inventory]);
 
     return (
         <React.Fragment>
             <FormComponent asset={asset} onChange={onChange} onSubmit={onSubmit} />
-            {!isLoading && <AssetsListComponent assets={inventory} />}
+            {!isLoading && <AssetsListComponent assets={inventory} onDelete={onDelete} />}
         </React.Fragment>
     )
 }
