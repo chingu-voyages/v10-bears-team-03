@@ -9,27 +9,27 @@ const FormComponent = ({ asset, onSubmit, onChange }) => {
             <form onSubmit={onSubmit}>
                 <div>
                     <label>Name:
-                        <input name="name" value={name} onChange={onChange} />
+                        <input name="name" value={name} onChange={onChange} required />
                     </label>
                 </div>
                 <div>
                     <label>Type:
-                        <input name="type" value={type} onChange={onChange} />
+                        <input name="type" value={type} onChange={onChange} required />
                     </label>
                 </div>
                 <div>
                     <label>Date Purchased:
-                        <input type="date" name="date_purchased" value={date_purchased} onChange={onChange} />
+                        <input type="date" name="date_purchased" value={date_purchased} onChange={onChange} required />
                     </label>
                 </div>
                 <div>
                     <label>Expire:
-                        <input name="expire" value={expire} onChange={onChange} />
+                        <input name="expire" value={expire} onChange={onChange} required />
                     </label> 
                 </div>
                 <div>
                     <label>Price:
-                        <input name="price" value={price} onChange={onChange} />
+                        <input name="price" value={price} onChange={onChange} required />
                     </label>
                 </div>
                 <div>
