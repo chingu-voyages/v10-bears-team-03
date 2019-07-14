@@ -19,7 +19,7 @@ const FormComponent = ({ asset, onSubmit, onChange }) => {
                 </div>
                 <div>
                     <label>Date Purchased:
-                        <input name="date_purchased" value={date_purchased} onChange={onChange} />
+                        <input type="date" name="date_purchased" value={date_purchased} onChange={onChange} />
                     </label>
                 </div>
                 <div>
