@@ -1,19 +1,19 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import startLogin from '../utils/startLogin';
 
 import Logo from '../components/Logo';
 import Navbar from '../components/Navbar';
 
-const Landing = () => (
-  <div>
-    <div className='landing-container'>
-      <Navbar id='landing-container-navbar' />
-
-      <Logo />
-      <button>Log In To Your Account</button>
-      <Link to='#'>No Account? Create one here!</Link>
+const Landing = () => {
+  return (
+    <div>
+      <div className='landing-container'>
+        <Navbar id='landing-container-navbar' />
+        <Logo />
+        <button onClick={startLogin}>Log In With Google</button>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default Landing;
