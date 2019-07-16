@@ -1,19 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { firebase, googleAuthProvider } from '../firebase/firebase';
 
 import Logo from '../components/Logo';
 import Navbar from '../components/Navbar';
 
-const Landing = () => (
-  <div>
-    <div className='landing-container'>
-      <Navbar id='landing-container-navbar' />
+const Landing = () => {
+  const startLogin = () => firebase.auth().signInWithPopup(googleAuthProvider);
+  return (
+    <div>
+      <div className='landing-container'>
+        <Navbar id='landing-container-navbar' />
 
-      <Logo />
-      <button>Log In To Your Account</button>
-      <Link to='#'>No Account? Create one here!</Link>
+        <Logo />
+        <button onClick={startLogin}>Log In With Google</button>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default Landing;
