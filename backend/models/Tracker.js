@@ -2,6 +2,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+
 const TrackerSchema = new Schema({
   name: {
       type: String
@@ -20,7 +21,8 @@ const TrackerSchema = new Schema({
   },
   where_purchased: {
       type: String
-  }
+  },
+  UserTrackerGroup: [{ type:Schema.Types.ObjectId, ref:"UserTrackers" }]
 
 });
 

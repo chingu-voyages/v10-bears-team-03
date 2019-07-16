@@ -10,6 +10,8 @@ const PORT = 4000;
 
 const trackerRoutes = require('./routes/API/trackers');
 const userRoutes = require('./routes/API/users');
+const userTrackerRoutes = require('./routes/API/userTrackers');
+
 
 mongoose.Promise = global.Promise;
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/tracker';
@@ -29,6 +31,7 @@ app.use(bodyParser.json());
 
 app.use('/trackers', trackerRoutes)
 app.use('/users', userRoutes)
+app.use('/userTrackers', userTrackerRoutes)
 
 
 app.listen(PORT, function() {

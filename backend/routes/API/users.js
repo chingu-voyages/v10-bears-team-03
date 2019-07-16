@@ -2,6 +2,7 @@ const express = require('express');
 const userRoutes = express.Router();
 
 let User = require('../../models/User');
+let UserTracker = require('../../models/UserTracker');
 
 //index
 userRoutes.route('/').get(function(req, res) {
@@ -17,7 +18,7 @@ userRoutes.route('/').get(function(req, res) {
 //show
 userRoutes.route('/:id').get(function(req, res) {
     let id = req.params.id;
-    User.findById(id, function(err, users) {
+    UserTracker.findById(id, function(err, users) {
         res.json(users);
     });
 });
