@@ -4,17 +4,35 @@ import axios from 'axios';
 import FormComponent from './FormComponent';
 import AssetsListComponent from './AssetsListComponent';
 
+
 function AssetsAndFormContainer() {
 
     const [inventory, setInventory] = useState([]);
     const [asset, setAsset] = useState({});
     const [isLoading, setIsLoading] = useState(true);
+    const [isUpdating, setIsUpdating] = useState(false);
 
     const onSubmit = (e) => {
-        axios.post('/trackers/add', asset)
-            .then((response) => console.log(response))
+
+        if (isUpdating) {
+            axios.post(`/trackers/update/${asset._id}`, asset)
+            .then((response) => console.log(response.data))
             .catch((error) => console.log(error))
 
+            setIsUpdating(false);
+        } else {
+            axios.post('/trackers/add', asset)
+            .then((response) => console.log(response))
+            .catch((error) => console.log(error))
+        }
+
+        setAsset({});
+        axios.get('/trackers')
+            .then((response) => {
+                const formattedAsset = reformatAsset(response.data)
+                setInventory(formattedAsset)
+            })
+            .catch((error) => console.log(error))
         e.preventDefault();
     }
 
@@ -24,34 +42,54 @@ function AssetsAndFormContainer() {
     }
 
     const onDelete = (_id) => {
+        setIsLoading(true);
+
         axios.get(`/trackers/delete/${_id}`)
             .then((response) => console.log(response))
             .catch((error) => console.log(error));
 
-        setIsLoading(true);
 
         axios.get('/trackers')
-            .then((response) => setInventory(response.data))
+            .then((response) => {
+                const reformattedAsset = reformatAsset(response.data);
+                setInventory(reformattedAsset);
+            })
             .catch((error) => console.log(error));
             
         setIsLoading(false);
     }
 
-  
+    const onUpdate = (_id) => {
+        setIsLoading(true);
+        setIsUpdating(true);
+
+        axios.get(`/trackers/${_id}`)
+             .then((response) => {
+                 const formattedAsset = reformatAsset(response.data);
+                 setAsset(formattedAsset);
+             })
+             .catch((error) => console.log(error))
+    }
+
+    const reformatAsset = (obj) => {
+        obj.date_purchased = obj.date_purchased.slice(0, 10)
+        console.log(obj);
+        return obj;
+    }
 
     useEffect(() => {
         setIsLoading(true);
         axios.get('/trackers')
             .then((response) => {
-                setInventory(response.data)
+                setInventory(response.data);
             })
         setIsLoading(false);
     }, [inventory]);
 
     return (
         <React.Fragment>
-            <FormComponent asset={asset} onChange={onChange} onSubmit={onSubmit} />
-            {!isLoading && <AssetsListComponent assets={inventory} onDelete={onDelete} />}
+            <FormComponent asset={asset} onChange={onChange} onSubmit={onSubmit} isUpdating={isUpdating} />
+            {!isLoading && <AssetsListComponent assets={inventory} onDelete={onDelete} onUpdate={onUpdate} />}
         </React.Fragment>
     )
 }
