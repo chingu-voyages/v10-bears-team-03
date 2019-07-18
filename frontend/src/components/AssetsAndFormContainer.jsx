@@ -81,7 +81,9 @@ function AssetsAndFormContainer() {
         setIsLoading(true);
         axios.get('/trackers')
             .then((response) => {
-                setInventory(response.data);
+                const responseAssets = response.data;
+                responseAssets.map((asset) => reformatAsset(asset));
+                setInventory(responseAssets);
             })
         setIsLoading(false);
     }, [inventory]);
