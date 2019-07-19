@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const AssetsListComponent = ({assets, onDelete, onUpdate, isUpdating}) => {
+const AssetsListComponent = ({assets, onDelete, onUpdate }) => {
     return (
         <table>
             <thead>
