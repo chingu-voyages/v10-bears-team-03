@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const FormComponent = ({ asset, onSubmit, onChange }) => {
+const FormComponent = ({ asset, onSubmit, onChange, isUpdating }) => {
     const { name, type, date_purchased, expire, price, where_purchased } = asset;
 
     return(
@@ -37,7 +37,9 @@ const FormComponent = ({ asset, onSubmit, onChange }) => {
                         <input name="where_purchased" value={where_purchased} onChange={onChange} />
                     </label> 
                 </div>
-                <input type="submit" value="Submit" />
+                {isUpdating ? 
+                <input type="submit" value="Update" />
+                : <input type="submit" value="Submit" /> }
             </form>
         </div>
     )
