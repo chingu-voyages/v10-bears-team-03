@@ -2,9 +2,9 @@
   position: fixed;
   top: 0;
   left: 0;
-  height: 6vh;
+  height: 40px;
   width: 100vw;
-  background: rgb(78, 74, 74);
+  background: $grey-background-color;
   text-align: right;
 
   .navbar-link {

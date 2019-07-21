@@ -2,7 +2,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  height: 94vh;
+  height: 100vh;
   width: 100vw;
 
   &::before {
@@ -26,12 +26,12 @@
     left: 0;
     height: 4vh;
     width: 100vw;
-    background: green;
   }
 
   .logo-container {
     height: 25vh;
-    margin: 32vh 0 10vh 0;
+    margin: 35vh 0 10vh 0;
+    padding-top: 3vh;
 
     &::before {
       content: '';
@@ -48,7 +48,7 @@
 
   button {
     display: block;
-    margin: 5vh auto;
+    margin: 12vh auto;
     padding: 10px;
     font-size: 16px;
     border: 2px solid black;
@@ -57,9 +57,9 @@
     background: rgba(255, 255, 255, 0.609);
 
     &:hover {
-      transform: 0.3s;
+      transition: 0.1s;
       transform: translate(-2px, -2px);
-      box-shadow: 2px 2px rgb(173, 171, 171);
+      box-shadow: 3px 3px $box-shadow-color;
     }
   }
 
