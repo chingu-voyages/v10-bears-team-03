@@ -23,6 +23,16 @@ function AssetsAndFormContainer() {
   const [isLoading, setIsLoading] = useState(true);
   const [isUpdating, setIsUpdating] = useState(false);
 
+  const goFetchInventory = () => {
+    axios
+      .get('/trackers')
+      .then(response => {
+        const reformattedAsset = reformatAsset(response.data);
+        setInventory(reformattedAsset);
+      })
+      .catch(error => console.log(error));
+  }
+
   const onSubmit = e => {
     if (isUpdating) {
       axios
@@ -39,13 +49,9 @@ function AssetsAndFormContainer() {
     }
 
     setAsset(emptyAsset);
-    axios
-      .get('/trackers')
-      .then(response => {
-        const formattedAsset = reformatAsset(response.data);
-        setInventory(formattedAsset);
-      })
-      .catch(error => console.log(error));
+
+    goFetchInventory();
+    
     e.preventDefault();
   };
 
@@ -57,13 +63,7 @@ function AssetsAndFormContainer() {
       .then(response => console.log(response))
       .catch(error => console.log(error));
 
-    axios
-      .get('/trackers')
-      .then(response => {
-        const reformattedAsset = reformatAsset(response.data);
-        setInventory(reformattedAsset);
-      })
-      .catch(error => console.log(error));
+    goFetchInventory();
 
     setIsLoading(false);
   };
@@ -123,6 +123,8 @@ function AssetsAndFormContainer() {
       />
     </React.Fragment>
   );
+
+
 }
 
 export default AssetsAndFormContainer;
