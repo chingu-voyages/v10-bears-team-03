@@ -62,8 +62,8 @@ userRoutes.route('/update/:id').post(function(req, res) {
     });
 });
 
-//delete use GET!!!! 
-userRoutes.route('/delete/:id').get(function (req, res) {
+//delete 
+userRoutes.route('/delete/:id').delete(function (req, res) {
     User.findByIdAndRemove({_id: req.params.id}, function(err, user){
         if(err) res.json(err);
         else res.json('Successfully removed');

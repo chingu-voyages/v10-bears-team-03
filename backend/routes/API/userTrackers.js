@@ -157,8 +157,8 @@ userTrackerRoutes.route('/update/:id').post(function(req, res) {
     });
 });
 
-//delete use GET!!!! 
-userTrackerRoutes.route('/delete/:id').get(function (req, res) {
+//delete
+userTrackerRoutes.route('/delete/:id').delete(function (req, res) {
     UserTracker.findById(req.params.id, function(err, userTracker) {
         //remove the item from the list 
         User.findById(userTracker.user_id, function(err, user) {
