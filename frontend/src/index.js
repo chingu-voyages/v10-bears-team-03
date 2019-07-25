@@ -6,9 +6,13 @@ import * as serviceWorker from './serviceWorker';
 import { firebase } from '../src/firebase/firebase';
 
 let hasRendered = false;
+let isAuthenticated = false;
 const renderApp = () => {
   if (!hasRendered) {
-    ReactDOM.render(<App />, document.getElementById('root'));
+    ReactDOM.render(
+      <App isAuthenticated={isAuthenticated} />,
+      document.getElementById('root')
+    );
     hasRendered = true;
   }
 };

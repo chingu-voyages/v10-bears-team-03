@@ -24,7 +24,7 @@ const FormComponent = ({
             name='name'
             value={name}
             onChange={onChange}
-            placeholder='Name'
+            placeholder='Brand name'
             required
           />
         </div>
@@ -55,7 +55,7 @@ const FormComponent = ({
             name='expire'
             value={expire}
             onChange={onChange}
-            placeholder='Expires'
+            placeholder='Expiration'
             required
           />
         </div>

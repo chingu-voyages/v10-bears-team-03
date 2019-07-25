@@ -30,7 +30,7 @@
 
   .logo-container {
     height: 25vh;
-    margin: 35vh 0 10vh 0;
+    margin: 35vh 0 12vh 0;
     padding-top: 3vh;
 
     &::before {
@@ -48,8 +48,9 @@
 
   button {
     display: block;
-    margin: 12vh auto;
-    padding: 10px;
+    margin: 10px auto;
+    width: 200px;
+    padding: 5px;
     font-size: 16px;
     border: 2px solid black;
     outline: none;
