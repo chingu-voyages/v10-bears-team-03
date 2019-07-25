@@ -7,10 +7,10 @@ const AssetsListComponent = ({ assets, onDelete, onUpdate, isUpdating }) => {
       <caption>Your Eqipment</caption>
       <thead>
         <tr>
-          <th scope='col'>Name</th>
-          <th scope='col'>Type</th>
+          <th scope='col'>Brand name</th>
+          <th scope='col'>Type of item</th>
           <th scope='col'>Date Purchased</th>
-          <th scope='col'>Expire</th>
+          <th scope='col'>Expiration</th>
           <th scope='col'>Price</th>
           <th scope='col'>Where Purchased</th>
           <th scope='col'>Update</th>
