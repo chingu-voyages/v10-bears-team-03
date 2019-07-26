@@ -22,11 +22,37 @@
     background-color: $grey-background-color;
     color: white;
     font-size: 16px;
-    margin-top: 10px;
+    margin: 20px auto;
+
+    &:hover {
+      background-color: $grey-background-color;
+      transition: 0.1s;
+      transform: translate(-2px, -2px);
+      box-shadow: 3px 3px $box-shadow-color;
+    }
   }
 
   p {
     margin-top: 15px;
     font-style: italic;
+  }
+
+  #create-account-button,
+  #password-reset-button {
+    display: block;
+    margin-top: 10px;
+    border: none;
+    text-decoration: underline;
+    line-height: 1.5;
+
+    &:hover {
+      font-size: 12px;
+      color: black;
+    }
+
+    &:focus {
+      outline: none;
+      border: none;
+    }
   }
 }
