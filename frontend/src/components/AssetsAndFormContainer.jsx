@@ -53,7 +53,7 @@ function AssetsAndFormContainer() {
     setIsLoading(true);
 
     axios
-      .get(`/trackers/delete/${_id}`)
+      .delete(`/trackers/delete/${_id}`)
       .then(response => console.log(response))
       .catch(error => console.log(error));
 
@@ -107,7 +107,7 @@ function AssetsAndFormContainer() {
       setInventory(responseAssets);
     });
     setIsLoading(false);
-  }, [inventory]);
+  }, []);
 
   return (
     <React.Fragment>
