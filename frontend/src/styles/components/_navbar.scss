@@ -19,3 +19,21 @@
     }
   }
 }
+
+@media all and (max-width: 600px) {
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 20%;
+    background: $grey-background-color;
+    text-align: left;
+
+    .navbar-link {
+      line-height: 3;
+      text-align: left;
+      padding-left: 10px;    
+    }
+  }
+}
