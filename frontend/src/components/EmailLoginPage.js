@@ -6,7 +6,7 @@ export default function EmailLoginPage() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [passwordConfirm, setPasswordConfirm] = useState();
-  const [errorMessage, setErrorMessage] = useState();
+  const [message, setMessage] = useState();
   const [accountExists, setAccountExists] = useState(true);
 
   const startEmailLogin = e => {
@@ -30,7 +30,7 @@ export default function EmailLoginPage() {
   const startCreateAccount = e => {
     e.preventDefault();
     if (password !== passwordConfirm) {
-      return setErrorMessage('Passwords do not match');
+      return setMessage('Passwords do not match');
     } else {
       firebase
         .auth()
@@ -45,6 +45,25 @@ export default function EmailLoginPage() {
             alert(errorMessage);
           }
           console.log(error);
+        });
+    }
+  };
+
+  const sendPasswordResetEmail = e => {
+    e.preventDefault();
+    if (!email) {
+      alert('Please enter your email address');
+    } else {
+      firebase
+        .auth()
+        .sendPasswordResetEmail(email)
+        .then(function() {
+          setMessage(
+            'A password reset link has been sent.  Please check your e-mail.'
+          );
+        })
+        .catch(function(error) {
+          // An error happened.
         });
     }
   };
@@ -69,7 +88,7 @@ export default function EmailLoginPage() {
             placeholder='Please enter your email'
             onChange={e => {
               setEmail(e.target.value);
-              setErrorMessage('');
+              setMessage('');
             }}
             required
           />
@@ -78,7 +97,7 @@ export default function EmailLoginPage() {
             type='password'
             onChange={e => {
               setPassword(e.target.value);
-              setErrorMessage('');
+              setMessage('');
             }}
             placeholder={
               accountExists
@@ -92,7 +111,7 @@ export default function EmailLoginPage() {
               className='email-form-input'
               onChange={e => {
                 setPasswordConfirm(e.target.value);
-                setErrorMessage('');
+                setMessage('');
               }}
               type='password'
               placeholder='Please re-enter your chosen password'
@@ -105,9 +124,12 @@ export default function EmailLoginPage() {
           <button id='create-account-button' onClick={displayCreateAccountForm}>
             No account? Create one now.
           </button>
+
+          <button id='password-reset-button' onClick={sendPasswordResetEmail}>
+            To reset password, enter e-mail address and click here.
+          </button>
         </form>
-        {errorMessage && <p>Passwords do not match</p>}
-        {}
+        {message && <p>{message}</p>}
       </div>
     </div>
   );

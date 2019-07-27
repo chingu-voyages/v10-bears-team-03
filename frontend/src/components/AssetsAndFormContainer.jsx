@@ -6,6 +6,7 @@ import 'react-dates/initialize';
 import Navbar from '../components/Navbar';
 import FormComponent from './FormComponent';
 import AssetsListComponent from './AssetsListComponent';
+import { firebase } from '../firebase/firebase';
 
 const emptyAsset = {
   name: '',
@@ -100,6 +101,9 @@ function AssetsAndFormContainer() {
   };
 
   useEffect(() => {
+    const userId = firebase.auth().currentUser.uid;
+    console.log(userId);
+
     setIsLoading(true);
     axios.get('/trackers').then(response => {
       const responseAssets = response.data;
