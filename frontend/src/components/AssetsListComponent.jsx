@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 const AssetsListComponent = ({ assets, onDelete, onUpdate, isUpdating }) => {
   return (
@@ -22,7 +23,9 @@ const AssetsListComponent = ({ assets, onDelete, onUpdate, isUpdating }) => {
           <tr key={asset._id}>
             <td className='name'>{asset.name}</td>
             <td className='type'>{asset.type}</td>
-            <td className='date_purchased'>{asset.date_purchased}</td>
+            <td className='date_purchased'>
+              {moment(asset.date_purchased).format('MM/DD/YYYY')}
+            </td>
             <td className='expire'>{asset.expire}</td>
             <td className='price'>{asset.price}</td>
             <td className='where_purchased'>{asset.where_purchased}</td>
