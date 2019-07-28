@@ -1,7 +1,9 @@
 const express = require('express');
 const userRoutes = express.Router();
 
+let UserTracker = require('../../models/UserTracker');
 let User = require('../../models/User');
+let Tracker = require('../../models/Tracker');
 
 //index
 userRoutes.route('/').get(function(req, res) {
@@ -64,9 +66,45 @@ userRoutes.route('/update/:id').post(function(req, res) {
 
 //delete 
 userRoutes.route('/delete/:id').delete(function (req, res) {
+    // UserTracker.find({ user_id: req.params.id }, function(err, userTrackers){
+    //     userTrackers.forEach(element => {
+    //         Tracker.findById(element.tracker_id, function(err, tracker) {
+    //             if (!tracker)
+    //                 res.status(404).send("data is not found");
+    //             else
+    //                 tracker.UserTrackerGroup.push(userTracker._id)
+                    
+    //                 tracker.save()
+    //                 .catch(err => {
+    //                     res.status(400).send("Tracker Update not possible");
+    //                 });
+    //             });
+    //     });
+    // })
+    // UserTracker.remove({ user_id: req.params.id })
     User.findByIdAndRemove({_id: req.params.id}, function(err, user){
         if(err) res.json(err);
-        else res.json('Successfully removed');
+        else {
+            user.UserTrackerGroup.forEach(element => {
+                UserTracker.findByIdAndRemove({_id: element}, function(err, userTracker){
+                    if(err) res.json(err);
+                    else {
+                        Tracker.findById(userTracker.tracker_id, function(err, tracker) {
+                            if (!tracker)
+                                res.status(404).send("data is not found");
+                            else
+                                tracker.UserTrackerGroup.splice( tracker.UserTrackerGroup.indexOf(userTracker._id), 1 );
+                                
+                                tracker.save()
+                                .catch(err => {
+                                    res.status(400).send("Tracker Update not possible");
+                                });
+                            });
+                    }
+                })
+            })
+            res.json('Successfully removed');
+        }
     });
 });
 

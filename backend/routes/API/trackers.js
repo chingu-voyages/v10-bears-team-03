@@ -1,8 +1,9 @@
 const express = require('express');
 const trackerRoutes = express.Router();
 
+let UserTracker = require('../../models/UserTracker');
+let User = require('../../models/User');
 let Tracker = require('../../models/Tracker');
-
 //index
 trackerRoutes.route('/').get(function(req, res) {
     Tracker.find(function(err, trackers) {
@@ -69,6 +70,7 @@ trackerRoutes.route('/delete/:id').delete(function (req, res) {
         if(err) res.json(err);
         else res.json('Successfully removed');
     });
+
 });
 
 module.exports = trackerRoutes;
