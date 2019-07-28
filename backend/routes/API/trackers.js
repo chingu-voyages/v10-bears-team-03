@@ -68,7 +68,28 @@ trackerRoutes.route('/update/:id').post(function(req, res) {
 trackerRoutes.route('/delete/:id').delete(function (req, res) {
     Tracker.findByIdAndRemove({_id: req.params.id}, function(err, tracker){
         if(err) res.json(err);
-        else res.json('Successfully removed');
+        else {
+            tracker.UserTrackerGroup.forEach(element => {
+                UserTracker.findByIdAndRemove({_id: element}, function(err, userTracker){
+                    if(err) res.json(err);
+                    else {
+                        User.findById(userTracker.user_id, function(err, user) {
+                            if (!user){
+                                res.status(404).send("User id data is not found");
+                            }
+                            else {
+                                user.UserTrackerGroup.splice( user.UserTrackerGroup.indexOf(userTracker._id), 1 );
+                                user.save()
+                                .catch(err => {
+                                    res.status(400).send("User Update not possible");
+                                });
+                            }
+                        });
+                    }
+                })
+            })
+            res.json('Successfully removed');
+        }
     });
 
 });

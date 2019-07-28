@@ -92,14 +92,14 @@ userRoutes.route('/delete/:id').delete(function (req, res) {
                         Tracker.findById(userTracker.tracker_id, function(err, tracker) {
                             if (!tracker)
                                 res.status(404).send("data is not found");
-                            else
+                            else{
                                 tracker.UserTrackerGroup.splice( tracker.UserTrackerGroup.indexOf(userTracker._id), 1 );
-                                
                                 tracker.save()
                                 .catch(err => {
                                     res.status(400).send("Tracker Update not possible");
                                 });
-                            });
+                            }
+                        });
                     }
                 })
             })
