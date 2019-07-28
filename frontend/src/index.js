@@ -5,6 +5,8 @@ import App, { history } from './App';
 import * as serviceWorker from './serviceWorker';
 import { firebase } from '../src/firebase/firebase';
 
+
+ReactDOM.render(<App />, document.getElementById('root'));
 let hasRendered = false;
 let isAuthenticated = false;
 const renderApp = () => {
