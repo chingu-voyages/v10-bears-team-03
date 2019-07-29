@@ -29,7 +29,6 @@ function AssetsAndFormContainer() {
       .then(response => {
         const responseAssets = response.data;
         setInventory(responseAssets);
-        console.log('fetched assets');
       })
       .catch(error => console.log(error));
   };
@@ -38,15 +37,12 @@ function AssetsAndFormContainer() {
     e.preventDefault();
     if (isUpdating) {
       axios
-        .get(`/trackers/get/${asset._id}`)
-        .then(response => console.log(response.data))
+        .post(`/trackers/update/${asset._id}`, asset)
+        .then(response => {
+          fetchAssets();
+          setIsUpdating(false);
+        })
         .catch(error => console.log(error));
-      // axios
-      //   .post(`/trackers/update/${asset._id}`, asset)
-      //   .then(response => console.log(response.data))
-      //   .catch(error => console.log(error));
-
-      setIsUpdating(false);
     } else {
       axios
         .post('/trackers/add', asset)
@@ -61,10 +57,10 @@ function AssetsAndFormContainer() {
   const onDelete = _id => {
     axios
       .delete(`/trackers/delete/${_id}`)
-      .then(response => console.log(response))
+      .then(() => fetchAssets())
       .catch(error => console.log(error));
 
-    fetchAssets();
+    // fetchAssets();
   };
 
   const onChange = e => {
@@ -74,9 +70,6 @@ function AssetsAndFormContainer() {
 
   const onDateChange = date_purchased => {
     setAsset(asset => ({ ...asset, date_purchased }));
-    const unix = date_purchased.valueOf();
-    const formatted = moment(unix).format();
-    console.log(unix, formatted); //will send ;
   };
 
   const onUpdate = _id => {
@@ -85,6 +78,7 @@ function AssetsAndFormContainer() {
     axios
       .get(`/trackers/${_id}`)
       .then(response => {
+        response.data.date_purchased = moment(response.data.date_purchased);
         setAsset(response.data);
       })
       .catch(error => console.log(error));
@@ -97,7 +91,6 @@ function AssetsAndFormContainer() {
     axios.get('/trackers').then(response => {
       const responseAssets = response.data;
       setInventory(responseAssets);
-      console.log('fetched assets');
     });
   }, []);
 
