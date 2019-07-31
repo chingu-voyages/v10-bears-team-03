@@ -21,10 +21,10 @@ const AssetsListComponent = ({ assets, onDelete, onUpdate, isUpdating }) => {
       <tbody>
         {assets.map(asset => (
           <tr key={asset._id}>
-            <td data-label="Date Purchased" className='date_purchased'>{at(asset.date_purchased).format('MM/DD/YYYY')}
+            <td data-label="Date Purchased" className='date_purchased'>{moment(asset.date_purchased).format('MM/DD/YYYY')}</td>
             <td data-label="Name" className='name'>{asset.name}</td>
             <td data-label="Type of item" className='type'>{asset.type}</td>
-            <td data-label="Date Purchased" className='date_purchased'>{asment(asset.date_purchased).format('MM/DD/YYYY')}td>
+            <td data-label="Date Purchased" className='date_purchased'>{moment(asset.date_purchased).format('MM/DD/YYYY')}</td>
               
             <td data-label="Expiration" className='expire'>{asset.expire}</td>
             <td data-label="Price" className='price'>{asset.price}</td>
@@ -37,6 +37,9 @@ const AssetsListComponent = ({ assets, onDelete, onUpdate, isUpdating }) => {
             </td>
           </tr>
         ))}
+      </tbody>
+      <tbody>
+        
       </tbody>
     </table>
   );
