@@ -15,6 +15,24 @@
 
   thead {
     background: lighten($grey-background-color, 50%);
+    th:nth-child(1) {
+      width: 18%;
+    }
+    th:nth-child(2) {
+      width: 18%;
+    }
+    th:nth-child(3) {
+      width: 15%;
+    }
+    th:nth-child(4) {
+      width: 10%;
+    }
+    th:nth-child(5) {
+      width: 10%;
+    }
+    th:nth-child(6) {
+      width: 14%;
+    }
     th:nth-child(7) {
       text-align: center;
     }
@@ -48,42 +66,42 @@
     width: 70%;
 
     caption {
-    font-size: 1.3em;
+      font-size: 1.3em;
     }
-  
+
     thead {
-    border: none;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
+      border: none;
+      clip: rect(0 0 0 0);
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      width: 1px;
     }
-  
+
     tr {
-    display: block;
-    border: none;
-    margin-bottom: .625em;
+      display: block;
+      border: none;
+      margin-bottom: 0.625em;
     }
-  
+
     th,
     td {
-    display: block;
-    border: none;
-    font-size: .8em;
-    text-align: right;
+      display: block;
+      border: none;
+      font-size: 0.8em;
+      text-align: right;
     }
-  
+
     td::before {
-    /*
+      /*
     * aria-label has no advantage, it won't be read inside a table
     content: attr(aria-label);
     */
-    content: attr(data-label);
-    float: left;
-    font-weight: bold;
+      content: attr(data-label);
+      float: left;
+      font-weight: bold;
     }
 
     .asset-update,
