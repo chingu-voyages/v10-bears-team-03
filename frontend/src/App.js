@@ -8,18 +8,22 @@ import Landing from './components/Landing';
 import AssetsAndFormContainer from './components/AssetsAndFormContainer';
 import EmailLoginPage from './components/EmailLoginPage';
 
+import WindowDimensionsProvider from './components/WindowDimensionsProvider';
 export const history = createBrowserHistory();
 
 class App extends Component {
   render() {
     return (
-      <Router history={history}>
-        <Switch>
-          <Route exact path='/' component={Landing} />
-          <Route exact path='/form' component={AssetsAndFormContainer} />
-          <Route exact path='/emaillogin' component={EmailLoginPage} />
-        </Switch>
-      </Router>
+      <WindowDimensionsProvider>
+        <Router history={history}>
+          <Switch>
+            <Route exact path='/' component={Landing} />
+            <Route exact path='/form' component={AssetsAndFormContainer} />
+            <Route exact path='/emaillogin' component={EmailLoginPage} />
+          </Switch>
+        </Router>
+      </WindowDimensionsProvider>
+
     );
   }
 }

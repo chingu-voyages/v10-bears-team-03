@@ -62,3 +62,65 @@
     }
   }
 }
+
+@media screen and (max-width: 600px) {
+  .add-asset-form {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    width: 30%;
+    margin-left: 45%;
+
+    input {
+      background-color: white;
+      display: inline-block;
+      height: 30px;
+      margin: 5px auto;
+      padding: 11px 11px 9px;
+      line-height: 24px;
+      width: 100%;
+      text-align: left;
+      font-size: 10px;
+      border: 1px solid black;
+      border-style: inset;
+  
+      &:hover {
+        background: lighten($box-shadow-color, 20%);
+      }
+    }
+  
+    .DateInput_input__focused {
+      border-bottom: none;
+    }
+    .SingleDatePickerInput__withBorder {
+      border: none;
+    }
+  
+    .DateInput_input {
+      height: 30px;
+    }
+  
+    .submit-button {
+      display: block;
+      background-color: $grey-background-color;
+      color: white;
+      width: 80px;
+      height: 40px;
+      text-align: center;
+      margin: 10px auto;
+      padding: 5px;
+      font-size: 16px;
+      border: 2px solid black;
+      outline: none;
+      border-radius: 5px;
+  
+      &:hover {
+        background-color: $grey-background-color;
+        transition: 0.1s;
+        transform: translate(-2px, -2px);
+        box-shadow: 3px 3px $box-shadow-color;
+      }
+    }
+  }
+}
+
