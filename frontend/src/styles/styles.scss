@@ -1,8 +1,10 @@
 @import '_base.scss';
 
+@import 'components/aboutPage';
 @import 'components/assetsList';
+@import 'components/contactPage';
+@import 'components/emailLoginPage';
 @import 'components/form';
 @import 'components/landing';
 @import 'components/logo';
 @import 'components/navbar';
-@import 'components/emailLoginPage';
