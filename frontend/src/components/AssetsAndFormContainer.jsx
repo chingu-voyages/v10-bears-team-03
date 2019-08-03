@@ -6,7 +6,6 @@ import 'react-dates/initialize';
 import Navbar from '../components/Navbar';
 import FormComponent from './FormComponent';
 import AssetsListComponent from './AssetsListComponent';
-// import { firebase } from '../firebase/firebase';
 import { withFirebase } from '../firebase/context';
 
 const emptyAsset = {
@@ -60,8 +59,6 @@ function AssetsAndFormContainerBase(props) {
       .delete(`/trackers/delete/${_id}`)
       .then(() => fetchAssets())
       .catch(error => console.log(error));
-
-    // fetchAssets();
   };
 
   const onChange = e => {
@@ -86,18 +83,20 @@ function AssetsAndFormContainerBase(props) {
   };
 
   useEffect(() => {
-    //REMOVE THESE 4 LINES BEFORE PRODUCTION!!!  Just showing how to access userId and userEmail
+    //REMOVE NEXT 4 LINES BEFORE PRODUCTION!!!  Just showing how to access userId and userEmail
 
     const userId = props.firebase.currentUserId();
     const userEmail = props.firebase.currentUserEmail();
     console.log('userId: ', userId);
     console.log('serEmail: ', userEmail);
 
+    //REMOVE ABOVE BEFORE PRODUCTION
+
     axios.get('/trackers').then(response => {
       const responseAssets = response.data;
       setInventory(responseAssets);
     });
-  }, []);
+  }, [props.firebase]);
 
   return (
     <React.Fragment>

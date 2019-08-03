@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
-import moment from 'moment';
 
 const FormComponent = ({
   asset,
@@ -54,15 +53,17 @@ const FormComponent = ({
         </div>
         <div>
           <input
+            type='number'
             name='expire'
             value={expire}
             onChange={onChange}
-            placeholder='Expiration'
+            placeholder='Expiration (number of months)'
             required
           />
         </div>
         <div>
           <input
+            type='number'
             name='price'
             value={price}
             onChange={onChange}

@@ -64,7 +64,7 @@ const EmailLoginPageBase = props => {
           );
         })
         .catch(function(error) {
-          // An error happened.
+          console.log(error);
         });
     }
   };

@@ -1,4 +1,4 @@
-#about-page {
+#contact-page {
   .title {
     margin-top: 20vh;
     margin-bottom: 40px;
@@ -8,12 +8,11 @@
     margin: 20px auto;
     max-width: 600px;
     line-height: 1.4;
-    text-align: left;
   }
 }
 
 @media screen and (max-width: 900px) {
-  #about-page {
+  #contact-page {
     border: none;
     margin-left: 25%;
     margin-top: 5%;

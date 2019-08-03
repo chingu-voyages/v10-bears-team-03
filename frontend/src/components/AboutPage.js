@@ -23,7 +23,11 @@ export default function AboutPage() {
         </p>
         <p>
           Fitquip was developed as a part of{' '}
-          <a href='https://medium.com/chingu' target='_blank'>
+          <a
+            href='https://medium.com/chingu'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
             Chingu
           </a>{' '}
           Voyage 10.

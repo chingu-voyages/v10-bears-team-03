@@ -9,6 +9,7 @@ import Landing from './components/Landing';
 import AssetsAndFormContainer from './components/AssetsAndFormContainer';
 import EmailLoginPage from './components/EmailLoginPage';
 import AboutPage from './components/AboutPage';
+import ContactPage from './components/ContactPage';
 
 import WindowDimensionsProvider from './components/WindowDimensionsProvider';
 export const history = createBrowserHistory();
@@ -34,7 +35,8 @@ const AppBase = props => {
             component={isAuthed ? AssetsAndFormContainer : Landing}
           />
           <Route exact path='/emaillogin' component={EmailLoginPage} />
-          <Route exact path='/about' component={AboutPage} />>
+          <Route exact path='/about' component={AboutPage} />
+          <Route exact path='/contact' component={ContactPage} />
         </Switch>
       </Router>
     </WindowDimensionsProvider>

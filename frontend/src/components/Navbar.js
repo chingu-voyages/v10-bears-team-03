@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import { firebase } from '../firebase/firebase';
 import { withFirebase } from '../firebase/context';
 
 const NavbarBase = props => {
@@ -15,7 +14,7 @@ const NavbarBase = props => {
       <Link to='/about' className='navbar-link'>
         About
       </Link>
-      <Link to='#' className='navbar-link'>
+      <Link to='/contact' className='navbar-link'>
         Contact
       </Link>
       {isAuthed && (
