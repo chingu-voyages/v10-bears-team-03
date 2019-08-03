@@ -30,7 +30,7 @@
 
   .logo-container {
     height: 25vh;
-    margin: 35vh 0 12vh 0;
+    margin: 35vh 0 2vh 0;
     padding-top: 3vh;
 
     &::before {
@@ -75,5 +75,13 @@
 
   .logo-title {
     font-size: $title-font-size;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .landing-container {
+    .logo-container {
+      margin: 35vh 0 12vh 0;
+    }
   }
 }

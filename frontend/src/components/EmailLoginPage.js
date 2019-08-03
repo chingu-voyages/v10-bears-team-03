@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
-import { firebase } from '../firebase/firebase';
+import { withFirebase } from '../firebase/context';
 
-export default function EmailLoginPage() {
+const EmailLoginPageBase = props => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [passwordConfirm, setPasswordConfirm] = useState();
@@ -10,10 +10,11 @@ export default function EmailLoginPage() {
   const [accountExists, setAccountExists] = useState(true);
 
   const startEmailLogin = e => {
+    console.log('start of login');
     e.preventDefault();
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
+    props.firebase
+      .loginWithEmailAndPassword(email, password)
+      .then(() => props.history.push('/form'))
       .catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
@@ -32,9 +33,12 @@ export default function EmailLoginPage() {
     if (password !== passwordConfirm) {
       return setMessage('Passwords do not match');
     } else {
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(email, password)
+      props.firebase
+        .createNewAccount(email, password)
+        .then(user => {
+          props.history.push('/form');
+          console.log(user.user);
+        })
         .catch(function(error) {
           // Handle Errors here.
           var errorCode = error.code;
@@ -49,13 +53,12 @@ export default function EmailLoginPage() {
     }
   };
 
-  const sendPasswordResetEmail = e => {
+  const passwordReset = e => {
     e.preventDefault();
     if (!email) {
       alert('Please enter your email address');
     } else {
-      firebase
-        .auth()
+      props.firebase
         .sendPasswordResetEmail(email)
         .then(function() {
           setMessage(
@@ -125,7 +128,7 @@ export default function EmailLoginPage() {
             No account? Create one now.
           </button>
 
-          <button id='password-reset-button' onClick={sendPasswordResetEmail}>
+          <button id='password-reset-button' onClick={passwordReset}>
             To reset password, enter e-mail address and click here.
           </button>
         </form>
@@ -133,4 +136,8 @@ export default function EmailLoginPage() {
       </div>
     </div>
   );
-}
+};
+
+const EmailLoginPage = withFirebase(EmailLoginPageBase);
+
+export default EmailLoginPage;

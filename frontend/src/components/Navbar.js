@@ -1,13 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { firebase } from '../firebase/firebase';
+// import { firebase } from '../firebase/firebase';
+import { withFirebase } from '../firebase/context';
 
-export default function Navbar() {
-  const startLogout = () => firebase.auth().signOut();
+const NavbarBase = props => {
+  const startLogout = () => props.firebase.signOut();
 
   return (
     <div className='navbar'>
-      <Link to='#' className='navbar-link'>
+      <Link to='/about' className='navbar-link'>
         About
       </Link>
       <Link to='#' className='navbar-link'>
@@ -21,4 +22,8 @@ export default function Navbar() {
       </Link>
     </div>
   );
-}
+};
+
+const Navbar = withFirebase(NavbarBase);
+
+export default Navbar;

@@ -6,7 +6,8 @@ import 'react-dates/initialize';
 import Navbar from '../components/Navbar';
 import FormComponent from './FormComponent';
 import AssetsListComponent from './AssetsListComponent';
-import { firebase } from '../firebase/firebase';
+// import { firebase } from '../firebase/firebase';
+import { withFirebase } from '../firebase/context';
 
 const emptyAsset = {
   name: '',
@@ -17,7 +18,7 @@ const emptyAsset = {
   date_purchased: null
 };
 
-function AssetsAndFormContainer() {
+function AssetsAndFormContainerBase(props) {
   const [inventory, setInventory] = useState([]);
   const [asset, setAsset] = useState(emptyAsset);
 
@@ -85,9 +86,9 @@ function AssetsAndFormContainer() {
   };
 
   useEffect(() => {
-    const userId = firebase.auth().currentUser.uid;
-    const userEmail = firebase.auth().currentUser.email;
-    console.log(userId, userEmail);
+    const user = props.firebase.user;
+    // const userEmail = props.firebase.auth.uid;
+    console.log(user);
     axios.get('/trackers').then(response => {
       const responseAssets = response.data;
       setInventory(responseAssets);
@@ -112,4 +113,5 @@ function AssetsAndFormContainer() {
   );
 }
 
+const AssetsAndFormContainer = withFirebase(AssetsAndFormContainerBase);
 export default AssetsAndFormContainer;

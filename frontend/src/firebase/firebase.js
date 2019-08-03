@@ -1,4 +1,5 @@
-import * as firebase from 'firebase';
+import app from 'firebase/app';
+import 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -10,8 +11,36 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_FIREBASE_APP_ID
 };
 
-firebase.initializeApp(firebaseConfig);
+class firebase {
+  constructor() {
+    app.initializeApp(firebaseConfig);
+    this.auth = app.auth();
+  }
 
-const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+  currentUserId = () =>
+    this.auth.currentUser ? this.auth.currentUser.uid : null;
+  currentUserEmail = () =>
+    this.auth.currentUser ? this.auth.currentUser.email : null;
 
-export { firebase, googleAuthProvider };
+  loginWithGoogle = () => {
+    const googleAuthProvider = new app.auth.GoogleAuthProvider();
+    return this.auth.signInWithPopup(googleAuthProvider);
+  };
+
+  loginWithEmailAndPassword = (email, password) =>
+    this.auth.signInWithEmailAndPassword(email, password);
+
+  createNewAccount = (email, password) =>
+    this.auth.createUserWithEmailAndPassword(email, password);
+
+  sendPasswordResetEmail = email => this.auth.sendPasswordResetEmail(email);
+
+  signOut = () => {
+    this.auth
+      .signOut()
+      .then(() => console.log('signed out'))
+      .catch(e => console.log('error logging out'));
+  };
+}
+
+export default firebase;
