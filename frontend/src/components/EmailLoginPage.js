@@ -10,7 +10,6 @@ const EmailLoginPageBase = props => {
   const [accountExists, setAccountExists] = useState(true);
 
   const startEmailLogin = e => {
-    console.log('start of login');
     e.preventDefault();
     props.firebase
       .loginWithEmailAndPassword(email, password)
@@ -37,7 +36,6 @@ const EmailLoginPageBase = props => {
         .createNewAccount(email, password)
         .then(user => {
           props.history.push('/form');
-          console.log(user.user);
         })
         .catch(function(error) {
           // Handle Errors here.

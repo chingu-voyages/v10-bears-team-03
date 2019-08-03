@@ -14,25 +14,24 @@ import WindowDimensionsProvider from './components/WindowDimensionsProvider';
 export const history = createBrowserHistory();
 
 const AppBase = props => {
-  const [authUser, setAuthUser] = useState(false);
+  const [isAuthed, setIsAuthed] = useState(false);
 
   props.firebase.auth.onAuthStateChanged(authUser => {
-    authUser ? setAuthUser(true) : setAuthUser(false);
+    authUser ? setIsAuthed(true) : setIsAuthed(false);
   });
 
-  // console.log(props.firebase.currentUserId());
-  // console.log(props.firebase.currentUserEmail());
-  // console.log('from state: ', authUser);
+  // const userId = props.firebase.currentUserId();
+  // const userEmail = props.firebase.currentUserEmail();
 
   return (
     <WindowDimensionsProvider>
-      <Router history={history}>
+      <Router history={history} isAuthed={isAuthed}>
         <Switch>
           <Route exact path='/' component={Landing} />
           <Route
             exact
             path='/form'
-            component={authUser ? AssetsAndFormContainer : Landing}
+            component={isAuthed ? AssetsAndFormContainer : Landing}
           />
           <Route exact path='/emaillogin' component={EmailLoginPage} />
           <Route exact path='/about' component={AboutPage} />>

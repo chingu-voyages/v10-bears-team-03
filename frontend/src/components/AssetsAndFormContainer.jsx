@@ -86,9 +86,13 @@ function AssetsAndFormContainerBase(props) {
   };
 
   useEffect(() => {
-    const user = props.firebase.user;
-    // const userEmail = props.firebase.auth.uid;
-    console.log(user);
+    //REMOVE THESE 4 LINES BEFORE PRODUCTION!!!  Just showing how to access userId and userEmail
+
+    const userId = props.firebase.currentUserId();
+    const userEmail = props.firebase.currentUserEmail();
+    console.log('userId: ', userId);
+    console.log('serEmail: ', userEmail);
+
     axios.get('/trackers').then(response => {
       const responseAssets = response.data;
       setInventory(responseAssets);

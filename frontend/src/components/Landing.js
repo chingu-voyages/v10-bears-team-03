@@ -1,5 +1,4 @@
 import React from 'react';
-// import startGoogleLogin from '../utils/startGoogleLogin';
 import { history } from '../App';
 import { withFirebase } from '../firebase/context';
 
@@ -10,8 +9,7 @@ const LandingBase = props => {
   const loginWithGoogle = () => {
     props.firebase
       .loginWithGoogle()
-      // .then(user => console.log(user.userId))
-
+      .then(user => props.history.push('/form'))
       .catch(function(error) {
         var errorMessage = error.message;
         console.log(errorMessage);
@@ -20,7 +18,7 @@ const LandingBase = props => {
 
   return (
     <div className='landing-container'>
-      <Navbar />
+      <Navbar isAuthed={props.isAuthed} />
       <Logo />
       <button onClick={loginWithGoogle}>Log In With Google</button>
       <button onClick={() => history.push('/emaillogin')}>
