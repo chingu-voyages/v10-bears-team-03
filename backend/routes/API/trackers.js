@@ -47,24 +47,22 @@ trackerRoutes.route('/edit/:id').get(function(req, res) {
 
 //update
 trackerRoutes.route('/update/:id').post(function(req, res) {
-  Tracker.findById(req.params.id, function(err, tracker) {
-    if (!tracker) res.status(404).send('data is not found');
-    else tracker.name = req.body.name;
-    tracker.type = req.body.type;
-    tracker.date_purchased = req.body.date_purchased;
-    tracker.expire = req.body.expire;
-    tracker.price = req.body.price;
-    tracker.where_purchased = req.body.where_purchased;
+    Tracker.findById(req.params.id, function(err, tracker) {
+        if (!tracker)
+            res.status(404).send("data is not found");
+        else
+            tracker.name = req.body.name;
+            tracker.type = req.body.type;
+            tracker.expire = req.body.expire;
+            tracker.price = req.body.price;
 
-    tracker
-      .save()
-      .then(tracker => {
-        res.json('Tracker updated!');
-      })
-      .catch(err => {
-        res.status(400).send('Update not possible');
-      });
-  });
+            tracker.save().then(tracker => {
+                res.json('Tracker updated!');
+            })
+            .catch(err => {
+                res.status(400).send("Update not possible");
+            });
+    });
 });
 
 //delete

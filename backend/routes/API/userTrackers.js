@@ -150,6 +150,8 @@ userTrackerRoutes.route('/update/:id').post(function(req, res) {
             res.status(404).send("data is not found");
         else {
             userTracker.distance_used = req.body.distance_used;
+            userTracker.date_purchased = req.body.date_purchased;
+            userTracker.where_purchased = req.body.where_purchased;
             userTracker.save().then(userTracker => {
                 res.json('UserTracker updated!');
             })
