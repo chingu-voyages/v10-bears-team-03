@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 const AssetsListComponent = ({ assets, onDelete, onUpdate, isUpdating }) => {
   return (
     <table className='asset_table'>
-      <caption>Your Eqipment</caption>
+      <caption>Your Equipment</caption>
       <thead>
         <tr>
           <th scope='col'>Brand name</th>
@@ -20,12 +21,25 @@ const AssetsListComponent = ({ assets, onDelete, onUpdate, isUpdating }) => {
       <tbody>
         {assets.map(asset => (
           <tr key={asset._id}>
-            <td className='name'>{asset.name}</td>
-            <td className='type'>{asset.type}</td>
-            <td className='date_purchased'>{asset.date_purchased}</td>
-            <td className='expire'>{asset.expire}</td>
-            <td className='price'>{asset.price}</td>
-            <td className='where_purchased'>{asset.where_purchased}</td>
+            <td data-label='Name' className='name'>
+              {asset.name}
+            </td>
+            <td data-label='Type of item' className='type'>
+              {asset.type}
+            </td>
+            <td data-label='Date Purchased' className='date_purchased'>
+              {moment(asset.date_purchased).format('MM/DD/YYYY')}
+            </td>
+
+            <td data-label='Expiration' className='expire'>
+              {asset.expire}
+            </td>
+            <td data-label='Price' className='price'>
+              {asset.price}
+            </td>
+            <td data-label='Where Purchased' className='where_purchased'>
+              {asset.where_purchased}
+            </td>
             <td className='asset-update'>
               <button onClick={() => onUpdate(asset._id)}>Update</button>
             </td>
@@ -35,6 +49,7 @@ const AssetsListComponent = ({ assets, onDelete, onUpdate, isUpdating }) => {
           </tr>
         ))}
       </tbody>
+      <tbody />
     </table>
   );
 };

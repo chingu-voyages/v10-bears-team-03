@@ -6,42 +6,44 @@ let User = require('../../models/User');
 let Tracker = require('../../models/Tracker');
 //index
 trackerRoutes.route('/').get(function(req, res) {
-    Tracker.find(function(err, trackers) {
-        if (err) {
-            console.log(err);
-        } else {
-            res.json(trackers);
-        }
-    });
+  Tracker.find(function(err, trackers) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.json(trackers);
+    }
+  });
 });
 
 //show
 trackerRoutes.route('/:id').get(function(req, res) {
-    let id = req.params.id;
-    Tracker.findById(id, function(err, trackers) {
-        res.json(trackers);
-    });
+  let id = req.params.id;
+  Tracker.findById(id, function(err, trackers) {
+    console.log('trackers rethrued: ', trackers);
+    res.json(trackers);
+  });
 });
 
 //add
 trackerRoutes.route('/add').post(function(req, res) {
-    let tracker = new Tracker(req.body);
-    tracker.save()
-        .then(tracker => {
-            res.status(200).json({'tracker': 'tracker added successfully'});
-        })
-        .catch(err => {
-            res.status(400).send('adding new tracker failed');
-        });
+  let tracker = new Tracker(req.body);
+  tracker
+    .save()
+    .then(tracker => {
+      res.status(200).json({ tracker: 'tracker added successfully' });
+    })
+    .catch(err => {
+      res.status(400).send('adding new tracker failed');
+    });
 });
 
 //edit?
-trackerRoutes.route('/edit/:id').get(function (req, res) {
-    let id = req.params.id;
-    Tracker.findById(id, function (err, tracker){
-        res.json(tracker);
-    });
+trackerRoutes.route('/edit/:id').get(function(req, res) {
+  let id = req.params.id;
+  Tracker.findById(id, function(err, tracker) {
+    res.json(tracker);
   });
+});
 
 //update
 trackerRoutes.route('/update/:id').post(function(req, res) {

@@ -47,20 +47,23 @@ const FormComponent = ({
             onFocusChange={({ focused }) => setPurchaseDateFocused(focused)} // PropTypes.func.isRequired
             block={true}
             numberOfMonths={1}
+            readOnly={true}
             id='date_purchased' // PropTypes.string.isRequired,
           />
         </div>
         <div>
           <input
+            type='number'
             name='expire'
             value={expire}
             onChange={onChange}
-            placeholder='Expiration'
+            placeholder='Expiration (number of months)'
             required
           />
         </div>
         <div>
           <input
+            type='number'
             name='price'
             value={price}
             onChange={onChange}
