@@ -8,9 +8,11 @@ const NavbarBase = props => {
 
   return (
     <div className='navbar'>
-      <Link to='/' className='navbar-link'>
-        Home
-      </Link>
+      {!isAuthed && (
+        <Link to='/' className='navbar-link'>
+          Home
+        </Link>
+      )}
       <Link to='/about' className='navbar-link'>
         About
       </Link>

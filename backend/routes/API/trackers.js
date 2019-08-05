@@ -1,8 +1,6 @@
 const express = require('express');
 const trackerRoutes = express.Router();
 
-let UserTracker = require('../../models/UserTracker');
-let User = require('../../models/User');
 let Tracker = require('../../models/Tracker');
 //index
 trackerRoutes.route('/').get(function(req, res) {
@@ -19,7 +17,6 @@ trackerRoutes.route('/').get(function(req, res) {
 trackerRoutes.route('/:id').get(function(req, res) {
   let id = req.params.id;
   Tracker.findById(id, function(err, trackers) {
-    console.log('trackers rethrued: ', trackers);
     res.json(trackers);
   });
 });
@@ -68,33 +65,14 @@ trackerRoutes.route('/update/:id').post(function(req, res) {
 });
 
 //delete
-trackerRoutes.route('/delete/:id').delete(function (req, res) {
-    Tracker.findByIdAndRemove({_id: req.params.id}, function(err, tracker){
-        if(err) res.json(err);
-        else {
-            tracker.UserTrackerGroup.forEach(element => {
-                UserTracker.findByIdAndRemove({_id: element}, function(err, userTracker){
-                    if(err) res.json(err);
-                    else {
-                        User.findById(userTracker.user_id, function(err, user) {
-                            if (!user){
-                                res.status(404).send("User id data is not found");
-                            }
-                            else {
-                                user.UserTrackerGroup.splice( user.UserTrackerGroup.indexOf(userTracker._id), 1 );
-                                user.save()
-                                .catch(err => {
-                                    res.status(400).send("User Update not possible");
-                                });
-                            }
-                        });
-                    }
-                })
-            })
-            res.json('Successfully removed');
-        }
-    });
-
+trackerRoutes.route('/delete/:id').delete(function(req, res) {
+  Tracker.findByIdAndRemove({ _id: req.params.id }, function(err, tracker) {
+    if (err) {
+      res.json(err);
+    } else {
+      res.send('item deleted');
+    }
+  });
 });
 
 module.exports = trackerRoutes;
