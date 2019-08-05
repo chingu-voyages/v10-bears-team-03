@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 
 const AssetsListComponent = ({ assets, onDelete, onUpdate, isUpdating }) => {
+  console.log(assets)
   return (
     <table className='asset_table'>
       <caption>Your Equipment</caption>
@@ -36,7 +37,7 @@ const AssetsListComponent = ({ assets, onDelete, onUpdate, isUpdating }) => {
               {asset.expire}
             </td>
             <td data-label='Price' className='price'>
-              {asset.price}
+              ${asset.price}.00
             </td>
             <td data-label='Distance' className='distance'>
               {asset.distance}

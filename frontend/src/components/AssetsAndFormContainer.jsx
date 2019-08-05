@@ -16,7 +16,8 @@ const emptyAsset = {
   distance: '',
   where_purchased: '',
   date_purchased: null,
-  email:''
+  email:'',
+  user_id:''
 };
 
 function AssetsAndFormContainerBase(props) {
@@ -26,6 +27,13 @@ function AssetsAndFormContainerBase(props) {
   const [isUpdating, setIsUpdating] = useState(false);
 
   const fetchAssets = () => {
+    // axios
+    //   .get('/userTrackers')
+    //   .then(response => {
+    //     const responseAssets = response.data;
+    //     setInventory(responseAssets);
+    //   })
+    //   .catch(error => console.log(error));
     axios
       .get('/trackers')
       .then(response => {
@@ -45,6 +53,15 @@ function AssetsAndFormContainerBase(props) {
           setIsUpdating(false);
         })
         .catch(error => console.log(error));
+      //updating the UserTracker too
+      axios
+        .post(`/userTrackers/update/${asset._id}`, asset)
+        .then(response => {
+          fetchAssets();
+          setIsUpdating(false);
+        })
+        .catch(error => console.log(error));
+      
     } else {
       axios
         .post('/trackers/add', asset)
@@ -85,6 +102,7 @@ function AssetsAndFormContainerBase(props) {
   };
 
   useEffect(() => {
+    console.log(process.env)
     //REMOVE NEXT 4 LINES BEFORE PRODUCTION!!!  Just showing how to access userId and userEmail
 
     const userId = props.firebase.currentUserId();
@@ -99,8 +117,8 @@ function AssetsAndFormContainerBase(props) {
       })
       .then(response => {
         console.log(response);
-        let email = response.data.email;
-        setAsset(asset => ({ ...asset, email }));
+        let user_id = response.data._id;
+        setAsset(asset => ({ ...asset, user_id }));
       })
       .catch(error => {
         let today = new Date();
@@ -112,16 +130,17 @@ function AssetsAndFormContainerBase(props) {
         .then(response => {
           console.log(response)
           //make the user to be the current user
-          let email = response.data.email;
-          setAsset(asset => ({ ...asset, email }));
+          let user_id = response.data._id;
+          setAsset(asset => ({ ...asset, user_id }));
         })
         .catch(error => console.log(error));
       });
 
-    axios.get('/trackers').then(response => {
+    axios.get('/userTrackers').then(response => {
       const responseAssets = response.data;
       setInventory(responseAssets);
     });
+
   }, [props.firebase]);
 
   return (
