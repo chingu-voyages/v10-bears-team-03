@@ -13,8 +13,10 @@ const emptyAsset = {
   type: '',
   expire: '',
   price: '',
+  distance: '',
   where_purchased: '',
-  date_purchased: null
+  date_purchased: null,
+  email:''
 };
 
 function AssetsAndFormContainerBase(props) {
@@ -91,6 +93,30 @@ function AssetsAndFormContainerBase(props) {
     console.log('serEmail: ', userEmail);
 
     //REMOVE ABOVE BEFORE PRODUCTION
+    
+    axios.post('/users/email', {
+      email: userEmail
+      })
+      .then(response => {
+        console.log(response);
+        let email = response.data.email;
+        setAsset(asset => ({ ...asset, email }));
+      })
+      .catch(error => {
+        let today = new Date();
+        axios
+        .post(`/users/add`, {
+          email: userEmail,
+          dateCreated: today,
+        })
+        .then(response => {
+          console.log(response)
+          //make the user to be the current user
+          let email = response.data.email;
+          setAsset(asset => ({ ...asset, email }));
+        })
+        .catch(error => console.log(error));
+      });
 
     axios.get('/trackers').then(response => {
       const responseAssets = response.data;

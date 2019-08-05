@@ -13,6 +13,7 @@ const AssetsListComponent = ({ assets, onDelete, onUpdate, isUpdating }) => {
           <th scope='col'>Date Purchased</th>
           <th scope='col'>Expiration</th>
           <th scope='col'>Price</th>
+          <th scope='col'>Distance Used(mile)</th>
           <th scope='col'>Where Purchased</th>
           <th scope='col'>Update</th>
           <th scope='col'>Delete</th>
@@ -36,6 +37,9 @@ const AssetsListComponent = ({ assets, onDelete, onUpdate, isUpdating }) => {
             </td>
             <td data-label='Price' className='price'>
               {asset.price}
+            </td>
+            <td data-label='Distance' className='distance'>
+              {asset.distance}
             </td>
             <td data-label='Where Purchased' className='where_purchased'>
               {asset.where_purchased}

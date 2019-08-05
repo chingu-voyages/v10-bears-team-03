@@ -168,11 +168,12 @@ userTrackerRoutes.route('/delete/:id').delete(function (req, res) {
     UserTracker.findById(req.params.id, function(err, userTracker) {
         //remove the item from the list 
         User.findById(userTracker.user_id, function(err, user) {
-            if (!user)
+            if (!user) {
+                console.log("user id data is not found")
                 res.status(404).send("User id data is not found");
+            }
             else{
                 user.UserTrackerGroup.splice( user.UserTrackerGroup.indexOf(userTracker._id), 1 );
-                
                 user.save()
                 .catch(err => {
                     res.status(400).send("User Update not possible");
@@ -181,8 +182,10 @@ userTrackerRoutes.route('/delete/:id').delete(function (req, res) {
         });
 
         Tracker.findById(userTracker.tracker_id, function(err, tracker) {
-            if (!tracker)
+            if (!tracker){
+                console.log("user id data is not found")
                 res.status(404).send("data is not found");
+            }
             else {
                 tracker.UserTrackerGroup.splice( tracker.UserTrackerGroup.indexOf(userTracker._id), 1 );
                 tracker.save()

@@ -24,6 +24,20 @@ userRoutes.route('/:id').get(function(req, res) {
     });
 });
 
+//get user information by providing email
+userRoutes.route('/email').post(function(req, res) {
+    let email = req.body.email;
+    User.findOne({"email":email}, function(err, user) {
+        if (err) {
+            console.log(err);
+            res.status(400).send('email is not found');
+        }
+        else {
+            res.json(user);
+        }
+    });
+});
+
 //add
 userRoutes.route('/add').post(function(req, res) {
     let user = new User(req.body);
