@@ -21,9 +21,25 @@ userTrackerRoutes.route('/').get(function(req, res) {
 //show
 userTrackerRoutes.route('/:id').get(function(req, res) {
     let id = req.params.id;
-    UserTrackerTracker.findById(id, function(err, userTrackers) {
+    UserTracker.findById(id, function(err, userTrackers) {
         res.json(userTrackers);
     });
+});
+
+//show with Tracker data
+userTrackerRoutes.route('/more/:id').get(function(req, res) {
+    let id = req.params.id;
+    let dic = {}
+    UserTracker.findById(id, function(err, userTrackers) {
+        dic = userTrackers
+        Tracker.findById({_id: userTrackers.tracker_id}, function(err, tracker){
+            res.json({...tracker._doc, ...dic._doc})
+        });
+
+        // res.json(userTrackers);
+    });
+
+    
 });
 
 //add //adding userTracker to the tracker and users array

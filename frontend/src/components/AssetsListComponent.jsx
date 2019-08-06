@@ -40,7 +40,7 @@ const AssetsListComponent = ({ assets, onDelete, onUpdate, isUpdating }) => {
               ${asset.price}.00
             </td>
             <td data-label='Distance' className='distance'>
-              {asset.distance}
+              {asset.distance_used}
             </td>
             <td data-label='Where Purchased' className='where_purchased'>
               {asset.where_purchased}

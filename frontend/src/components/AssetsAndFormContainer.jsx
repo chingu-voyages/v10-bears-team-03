@@ -7,13 +7,14 @@ import Navbar from '../components/Navbar';
 import FormComponent from './FormComponent';
 import AssetsListComponent from './AssetsListComponent';
 import { withFirebase } from '../firebase/context';
+import { fdatasyncSync } from 'fs';
 
 const emptyAsset = {
   name: '',
   type: '',
   expire: '',
   price: '',
-  distance: '',
+  distance_used: '',
   where_purchased: '',
   date_purchased: null,
   email:'',
@@ -27,13 +28,6 @@ function AssetsAndFormContainerBase(props) {
   const [isUpdating, setIsUpdating] = useState(false);
 
   const fetchAssets = () => {
-    // axios
-    //   .get('/userTrackers')
-    //   .then(response => {
-    //     const responseAssets = response.data;
-    //     setInventory(responseAssets);
-    //   })
-    //   .catch(error => console.log(error));
     axios
       .get('/trackers')
       .then(response => {
@@ -102,44 +96,63 @@ function AssetsAndFormContainerBase(props) {
   };
 
   useEffect(() => {
-    console.log(process.env)
-    //REMOVE NEXT 4 LINES BEFORE PRODUCTION!!!  Just showing how to access userId and userEmail
-
     const userId = props.firebase.currentUserId();
     const userEmail = props.firebase.currentUserEmail();
-    console.log('userId: ', userId);
-    console.log('serEmail: ', userEmail);
-
-    //REMOVE ABOVE BEFORE PRODUCTION
     
     axios.post('/users/email', {
       email: userEmail
       })
       .then(response => {
-        console.log(response);
         let user_id = response.data._id;
         setAsset(asset => ({ ...asset, user_id }));
+
+        axios.get(`/users/${user_id}`)
+          .then(response => {
+          const responseAssets = response.data;
+
+          let resp_data = responseAssets.UserTrackerGroup.map( async e => {
+            return axios.get(`/userTrackers/more/${e}`)
+          })
+          
+          Promise.all(resp_data).then(res =>{
+            let a = res.map(res => {
+              return res.data
+            })
+            setInventory(a)
+          })            
+        });
       })
       .catch(error => {
         let today = new Date();
-        axios
-        .post(`/users/add`, {
+        axios.post(`/users/add`, {
           email: userEmail,
           dateCreated: today,
         })
         .then(response => {
-          console.log(response)
           //make the user to be the current user
           let user_id = response.data._id;
           setAsset(asset => ({ ...asset, user_id }));
+
+          axios.get(`/users/${user_id}`)
+          .then(response => {
+            const responseAssets = response.data;
+
+            let resp_data = responseAssets.UserTrackerGroup.map( async e => {
+              return axios.get(`/userTrackers/more/${e}`)
+            })
+            
+            Promise.all(resp_data).then(res =>{
+              let a = res.map(res => {
+                return res.data
+              })
+              setInventory(a)
+            });            
+          });
         })
         .catch(error => console.log(error));
       });
 
-    axios.get('/userTrackers').then(response => {
-      const responseAssets = response.data;
-      setInventory(responseAssets);
-    });
+    
 
   }, [props.firebase]);
 
