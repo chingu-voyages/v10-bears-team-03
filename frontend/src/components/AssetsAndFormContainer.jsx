@@ -28,48 +28,68 @@ function AssetsAndFormContainerBase(props) {
   const [isUpdating, setIsUpdating] = useState(false);
 
   const fetchAssets = () => {
-    axios
-      .get('/trackers')
+    // axios
+    //   .get('/trackers')
+    //   .then(response => {
+    //     const responseAssets = response.data;
+    //     setInventory(responseAssets);
+    //   })
+    //   .catch(error => console.log(error));
+    
+    axios.get(`/users/${asset.user_id}`)
       .then(response => {
-        const responseAssets = response.data;
-        setInventory(responseAssets);
+      const responseAssets = response.data;
+
+      let resp_data = responseAssets.UserTrackerGroup.map( async e => {
+        return axios.get(`/userTrackers/more/${e}`)
       })
-      .catch(error => console.log(error));
+      
+      Promise.all(resp_data).then(res =>{
+        let combined = res.map(res => {
+          return res.data
+        })
+        setInventory(combined)
+      })            
+    });
   };
 
   const onSubmit = e => {
     e.preventDefault();
     if (isUpdating) {
       axios
-        .post(`/trackers/update/${asset._id}`, asset)
-        .then(response => {
-          fetchAssets();
-          setIsUpdating(false);
-        })
-        .catch(error => console.log(error));
-      //updating the UserTracker too
-      axios
         .post(`/userTrackers/update/${asset._id}`, asset)
         .then(response => {
-          fetchAssets();
-          setIsUpdating(false);
+          //updating the UserTracker too
+          axios
+          .post(`/trackers/update/${response.data.tracker_id}`, asset)
+          .then(response => {
+            fetchAssets();
+            setIsUpdating(false);
+          })
+          .catch(error => console.log(error));
         })
         .catch(error => console.log(error));
       
     } else {
-      axios
-        .post('/trackers/add', asset)
-        .then(() => {
-          fetchAssets();
+      axios.post('/trackers/add', asset)
+        .then((res) => {
+          axios
+            .post('/userTrackers/add', {...asset, tracker_id:res.data._id, distance_used:0})
+            .then(() => {
+              fetchAssets();
+            })
+            .catch(error => console.log(error));
         })
         .catch(error => console.log(error));
+
+      
     }
     setAsset(emptyAsset);
   };
 
   const onDelete = _id => {
     axios
-      .delete(`/trackers/delete/${_id}`)
+      .delete(`/userTrackers/delete/${_id}`)
       .then(() => fetchAssets())
       .catch(error => console.log(error));
   };
@@ -115,10 +135,10 @@ function AssetsAndFormContainerBase(props) {
           })
           
           Promise.all(resp_data).then(res =>{
-            let a = res.map(res => {
+            let combined = res.map(res => {
               return res.data
             })
-            setInventory(a)
+            setInventory(combined)
           })            
         });
       })
@@ -142,10 +162,10 @@ function AssetsAndFormContainerBase(props) {
             })
             
             Promise.all(resp_data).then(res =>{
-              let a = res.map(res => {
+              let combined = res.map(res => {
                 return res.data
               })
-              setInventory(a)
+              setInventory(combined)
             });            
           });
         })

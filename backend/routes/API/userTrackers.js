@@ -88,7 +88,7 @@ userTrackerRoutes.route('/edit/:id').get(function (req, res) {
     });
   });
 
-//update ids
+//update ids (NOTE: to be used later )
 userTrackerRoutes.route('/updateIds/:id').post(function(req, res) {
     UserTracker.findById(req.params.id, function(err, userTracker) {
 
@@ -169,7 +169,7 @@ userTrackerRoutes.route('/update/:id').post(function(req, res) {
             userTracker.date_purchased = req.body.date_purchased;
             userTracker.where_purchased = req.body.where_purchased;
             userTracker.save().then(userTracker => {
-                res.json('UserTracker updated!');
+                res.json({userTracker:'UserTracker updated!' , ...userTracker._doc});
             })
             .catch(err => {
                 res.status(400).send("Update not possible");

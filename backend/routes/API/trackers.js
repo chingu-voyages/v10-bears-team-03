@@ -30,7 +30,7 @@ trackerRoutes.route('/add').post(function(req, res) {
   tracker
     .save()
     .then(tracker => {
-      res.status(200).json({ tracker: 'tracker added successfully' });
+      res.status(200).json({ tracker: 'tracker added successfully' , ...tracker._doc});
     })
     .catch(err => {
       res.status(400).send('adding new tracker failed');
@@ -57,7 +57,7 @@ trackerRoutes.route('/update/:id').post(function(req, res) {
             tracker.price = req.body.price;
 
             tracker.save().then(tracker => {
-                res.json('Tracker updated!');
+                res.json({tracker: 'Tracker updated!' , ...tracker._doc});
             })
             .catch(err => {
                 res.status(400).send("Update not possible");
@@ -92,7 +92,10 @@ trackerRoutes.route('/delete/:id').delete(function (req, res) {
             res.json('Successfully removed');
         }
     });
-
 });
+
+trackerRoutes.route('/deleteall/').delete(function (req, res){
+  Tracker.remove({})
+})
 
 module.exports = trackerRoutes;
