@@ -37,7 +37,7 @@ const AssetsListComponent = ({ assets, onDelete, onUpdate, isUpdating }) => {
               {asset.expire}
             </td>
             <td data-label='Price' className='price'>
-              ${asset.price}.00
+              ${asset.price}
             </td>
             <td data-label='Distance' className='distance'>
               {asset.distance_used}
