@@ -17,13 +17,13 @@ const emptyAsset = {
   distance_used: '',
   where_purchased: '',
   date_purchased: null,
-  email:'',
-  user_id:''
+  email:''
 };
 
 function AssetsAndFormContainerBase(props) {
   const [inventory, setInventory] = useState([]);
   const [asset, setAsset] = useState(emptyAsset);
+  const [user_id, setUser_id] = useState("")
 
   const [isUpdating, setIsUpdating] = useState(false);
 
@@ -36,7 +36,7 @@ function AssetsAndFormContainerBase(props) {
     //   })
     //   .catch(error => console.log(error));
     
-    axios.get(`/users/${asset.user_id}`)
+    axios.get(`/users/${user_id.user_id}`)
       .then(response => {
       const responseAssets = response.data;
 
@@ -56,12 +56,13 @@ function AssetsAndFormContainerBase(props) {
   const onSubmit = e => {
     e.preventDefault();
     if (isUpdating) {
+      console.log("update post", {...asset, ...user_id})
       axios
-        .post(`/userTrackers/update/${asset._id}`, asset)
+        .post(`/userTrackers/update/${asset._id}`, {...asset, ...user_id})
         .then(response => {
           //updating the UserTracker too
           axios
-          .post(`/trackers/update/${response.data.tracker_id}`, asset)
+          .post(`/trackers/update/${response.data.tracker_id}`, {...asset, ...user_id})
           .then(response => {
             fetchAssets();
             setIsUpdating(false);
@@ -71,10 +72,11 @@ function AssetsAndFormContainerBase(props) {
         .catch(error => console.log(error));
       
     } else {
-      axios.post('/trackers/add', asset)
+      console.log("add post", {...asset, ...user_id})
+      axios.post('/trackers/add', {...asset, ...user_id})
         .then((res) => {
           axios
-            .post('/userTrackers/add', {...asset, tracker_id:res.data._id, distance_used:0})
+            .post('/userTrackers/add', {...asset, ...user_id, tracker_id:res.data._id, distance_used:0})
             .then(() => {
               fetchAssets();
             })
@@ -107,26 +109,34 @@ function AssetsAndFormContainerBase(props) {
     setIsUpdating(true);
 
     axios
-      .get(`/trackers/${_id}`)
-      .then(response => {
-        response.data.date_purchased = moment(response.data.date_purchased);
-        setAsset(response.data);
+      .get(`/userTrackers/${_id}`)
+      .then(response => {        
+
+        axios.get(`/trackers/${response.data.tracker_id}`)
+          .then(res => {
+            setAsset(res.data);
+            response.data.date_purchased = moment(response.data.date_purchased);
+            setAsset(response.data);
+          })
+
+        
       })
       .catch(error => console.log(error));
+    console.log("check asset onUpdate", asset)
   };
 
   useEffect(() => {
-    const userId = props.firebase.currentUserId();
     const userEmail = props.firebase.currentUserEmail();
     
     axios.post('/users/email', {
       email: userEmail
       })
       .then(response => {
-        let user_id = response.data._id;
-        setAsset(asset => ({ ...asset, user_id }));
-
-        axios.get(`/users/${user_id}`)
+        let userId = response.data._id;
+        
+        setUser_id(user_id => ({ ...user_id, user_id:userId }));
+        console.log("check userid", userId, user_id)
+        axios.get(`/users/${userId}`)
           .then(response => {
           const responseAssets = response.data;
 
@@ -150,10 +160,10 @@ function AssetsAndFormContainerBase(props) {
         })
         .then(response => {
           //make the user to be the current user
-          let user_id = response.data._id;
-          setAsset(asset => ({ ...asset, user_id }));
-
-          axios.get(`/users/${user_id}`)
+          let userId = response.data._id;
+          setUser_id(user_id => ({ ...user_id, user_id:userId }));
+          console.log("check userid", userId, user_id)
+          axios.get(`/users/${userId}`)
           .then(response => {
             const responseAssets = response.data;
 

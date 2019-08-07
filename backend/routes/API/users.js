@@ -25,28 +25,28 @@ userRoutes.route('/:id').get(function(req, res) {
 });
 
 //get all of the data from (note to dev: this uses promise to resolve)
-userRoutes.route('/inventory/:id').get(function(req, res) {
-    let id = req.params.id;
-    let arr = []
-    User.findById(id, function(err, users) {
-        Promise.all(users.UserTrackerGroup.map( async element => {
-            return UserTracker.findById({_id: element});
-        })).then(a => {
-            res.json(a)
-        })
-        // Promise.all(promises).then(function(userTracker) {        
-        //     let prom = Tracker.findById(userTracker.tracker_id, function(err, tracker) {
-        //             arr.push({...userTracker, ...tracker})
-        //     });
-        //     console.log(arr)
-        //     Promise.all(prom).then(function(tracker) {
-        //         console.log(tracker)
-        //     });
+// userRoutes.route('/inventory/:id').get(function(req, res) {
+//     let id = req.params.id;
+//     let arr = []
+//     User.findById(id, function(err, users) {
+//         Promise.all(users.UserTrackerGroup.map( async element => {
+//             return UserTracker.findById({_id: element});
+//         })).then(a => {
+//             res.json(a)
+//         })
+//         // Promise.all(promises).then(function(userTracker) {        
+//         //     let prom = Tracker.findById(userTracker.tracker_id, function(err, tracker) {
+//         //             arr.push({...userTracker, ...tracker})
+//         //     });
+//         //     console.log(arr)
+//         //     Promise.all(prom).then(function(tracker) {
+//         //         console.log(tracker)
+//         //     });
 
-        // })
+//         // })
         
-    });
-});
+//     });
+// });
 
 //get user information by providing email
 userRoutes.route('/email').post(function(req, res) {
