@@ -68,7 +68,6 @@ const FormComponent = ({
             value={price}
             onChange={onChange}
             placeholder='Price'
-            required
           />
         </div>
         {/* <div>

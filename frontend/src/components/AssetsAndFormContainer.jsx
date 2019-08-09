@@ -116,9 +116,9 @@ function AssetsAndFormContainerBase(props) {
 
         axios.get(`/trackers/${response.data.tracker_id}`)
           .then(res => {
-            setAsset(res.data);
             response.data.date_purchased = moment(response.data.date_purchased);
-            setAsset(response.data);
+            setAsset({...res.data, ...response.data});
+            
             
           })
           console.log("check asset onUpdate", asset)
