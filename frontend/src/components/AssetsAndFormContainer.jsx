@@ -142,7 +142,7 @@ function AssetsAndFormContainerBase(props) {
           .then(response => {
           const responseAssets = response.data;
 
-          let resp_data = responseAssets.UserTrackerGroup.map( async e => {
+          let resp_data = responseAssets.UserTrackerGroup.map( e => {
             return axios.get(`/userTrackers/more/${e}`)
           })
           
