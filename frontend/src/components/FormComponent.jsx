@@ -11,7 +11,7 @@ const FormComponent = ({
   onDateChange,
   isUpdating
 }) => {
-  const { name, type, date_purchased, expire, price, where_purchased } = asset;
+  const { name, type, date_purchased, expire, price, where_purchased, distance_used} = asset;
 
   const [purchaseDateFocused, setPurchaseDateFocused] = useState(false);
 
@@ -68,9 +68,17 @@ const FormComponent = ({
             value={price}
             onChange={onChange}
             placeholder='Price'
-            required
           />
         </div>
+        {/* <div>
+          <input
+            type='number'
+            name='distance'
+            value={distance_used}
+            onChange={onChange}
+            placeholder='distance_used'
+          />
+        </div> */}
         <div>
           <input
             name='where_purchased'
@@ -80,9 +88,9 @@ const FormComponent = ({
           />
         </div>
         {isUpdating ? (
-          <input type='submit' value='Update' />
+          <input type='submit' value='Update' onClick={onSubmit}/>
         ) : (
-          <input className='submit-button' type='submit' value='Submit' />
+          <input className='submit-button' type='submit' value='Submit' onClick={onSubmit}/>
         )}
       </form>
     </div>

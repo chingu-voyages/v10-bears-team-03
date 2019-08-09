@@ -22,7 +22,12 @@ userTrackerRoutes.route('/').get(function(req, res) {
 userTrackerRoutes.route('/:id').get(function(req, res) {
     let id = req.params.id;
     UserTracker.findById(id, function(err, userTrackers) {
-        res.json(userTrackers);
+        if (err) {
+            console.log(err);
+            res.status(404).send("UserTracker id is not found");
+        } else {
+            res.json(userTrackers);
+        }
     });
 });
 
@@ -32,10 +37,19 @@ userTrackerRoutes.route('/more/:id').get(function(req, res) {
     let dic = {}
     UserTracker.findById(id, function(err, userTrackers) {
         dic = userTrackers
-        Tracker.findById({_id: userTrackers.tracker_id}, function(err, tracker){
-            res.json({...tracker._doc, ...dic._doc})
-        });
-
+        if (err) {
+            console.log(err);
+            res.status(404).send("UserTracker id is not found");
+        } else {
+            Tracker.findById({_id: userTrackers.tracker_id}, function(err, tracker){
+                if (err) {
+                    console.log(err);
+                    res.status(404).send("Tracker id is not found");
+                } else {
+                    res.json({...tracker._doc, ...dic._doc})
+                }
+            });
+        }
         // res.json(userTrackers);
     });
 
@@ -50,14 +64,15 @@ userTrackerRoutes.route('/add').post(function(req, res) {
     User.findById(userTracker.user_id, function(err, user) {
         if (!user)
             res.status(404).send("User id data is not found");
-        else
+        else{
             user.UserTrackerGroup.push(userTracker._id)
             
             user.save()
             .catch(err => {
                 res.status(400).send("User Update not possible");
             });
-        });
+        }
+    });
 
     Tracker.findById(userTracker.tracker_id, function(err, tracker) {
         if (!tracker)
@@ -192,6 +207,7 @@ userTrackerRoutes.route('/delete/:id').delete(function (req, res) {
                 user.UserTrackerGroup.splice( user.UserTrackerGroup.indexOf(userTracker._id), 1 );
                 user.save()
                 .catch(err => {
+                    console.log("user Update is not possible")
                     res.status(400).send("User Update not possible");
                 });
             }
@@ -206,6 +222,7 @@ userTrackerRoutes.route('/delete/:id').delete(function (req, res) {
                 tracker.UserTrackerGroup.splice( tracker.UserTrackerGroup.indexOf(userTracker._id), 1 );
                 tracker.save()
                 .catch(err => {
+                    console.log("tracker Update is not possible")
                     res.status(400).send("Tracker Update not possible");
                 });
             }
