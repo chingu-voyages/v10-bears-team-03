@@ -57,6 +57,7 @@ function AssetsAndFormContainerBase(props) {
     e.preventDefault();
     if (isUpdating) {
       console.log("update post", {...asset, ...user_id})
+      console.log(asset)
       axios
         .post(`/userTrackers/update/${asset._id}`, {...asset, ...user_id})
         .then(response => {
@@ -99,6 +100,7 @@ function AssetsAndFormContainerBase(props) {
   const onChange = e => {
     e.persist();
     setAsset(asset => ({ ...asset, [e.target.name]: e.target.value }));
+    console.log(asset)
   };
 
   const onDateChange = date_purchased => {
@@ -117,12 +119,12 @@ function AssetsAndFormContainerBase(props) {
             setAsset(res.data);
             response.data.date_purchased = moment(response.data.date_purchased);
             setAsset(response.data);
+            
           })
-
-        
+          console.log("check asset onUpdate", asset)
       })
       .catch(error => console.log(error));
-    console.log("check asset onUpdate", asset)
+    
   };
 
   useEffect(() => {
