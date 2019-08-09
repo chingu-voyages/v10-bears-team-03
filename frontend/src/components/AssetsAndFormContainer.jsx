@@ -142,7 +142,7 @@ function AssetsAndFormContainerBase(props) {
           .then(response => {
           const responseAssets = response.data;
 
-          let resp_data = responseAssets.UserTrackerGroup.map( async e => {
+          let resp_data = responseAssets.UserTrackerGroup.map( e => {
             return axios.get(`/userTrackers/more/${e}`)
           })
           
@@ -162,24 +162,31 @@ function AssetsAndFormContainerBase(props) {
         })
         .then(response => {
           //make the user to be the current user
-          let userId = response.data._id;
-          setUser_id(user_id => ({ ...user_id, user_id:userId }));
-          console.log("check userid", userId, user_id)
-          axios.get(`/users/${userId}`)
-          .then(response => {
-            const responseAssets = response.data;
-
-            let resp_data = responseAssets.UserTrackerGroup.map( async e => {
-              return axios.get(`/userTrackers/more/${e}`)
+          axios.post('/users/email', {
+            email: userEmail
             })
+            .then(resp => {
+              let userId = resp.data._id;
+              setUser_id(user_id => ({ ...user_id, user_id:userId }));
+              console.log("check userid", userId, user_id)
+
+            })
+          
+          // axios.get(`/users/${userId}`)
+          // .then(response => {
+          //   const responseAssets = response.data;
+
+          //   let resp_data = responseAssets.UserTrackerGroup.map( e => {
+          //     return axios.get(`/userTrackers/more/${e}`)
+          //   })
             
-            Promise.all(resp_data).then(res =>{
-              let combined = res.map(res => {
-                return res.data
-              })
-              setInventory(combined)
-            });            
-          });
+          //   Promise.all(resp_data).then(res =>{
+          //     let combined = res.map(res => {
+          //       return res.data
+          //     })
+          //     setInventory(combined)
+          //   });            
+          // });
         })
         .catch(error => console.log(error));
       });
