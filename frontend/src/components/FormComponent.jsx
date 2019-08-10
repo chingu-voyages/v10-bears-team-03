@@ -88,9 +88,9 @@ const FormComponent = ({
           />
         </div>
         {isUpdating ? (
-          <input type='submit' value='Update' onClick={onSubmit}/>
+          <input type='submit' value='Update'/>
         ) : (
-          <input className='submit-button' type='submit' value='Submit' onClick={onSubmit}/>
+          <input className='submit-button' type='submit' value='Submit'/>
         )}
       </form>
     </div>
