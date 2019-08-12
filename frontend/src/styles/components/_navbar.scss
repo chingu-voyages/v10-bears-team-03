@@ -1,0 +1,40 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 40px;
+  width: 100vw;
+  background: $grey-background-color;
+  text-align: right;
+  z-index: 1;
+
+  .navbar-link {
+    display: inline-block;
+    height: 6vh;
+    width: 150px;
+    color: white;
+    line-height: 3;
+    text-decoration: none;
+    &:hover {
+      color: rgb(173, 169, 169);
+    }
+  }
+}
+
+@media all and (max-width: 900px) {
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 20%;
+    background: $grey-background-color;
+    text-align: left;
+
+    .navbar-link {
+      line-height: 3;
+      text-align: left;
+      padding-left: 10px;
+    }
+  }
+}

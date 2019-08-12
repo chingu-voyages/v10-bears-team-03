@@ -1,0 +1,21 @@
+#contact-page {
+  .title {
+    margin-top: 20vh;
+    margin-bottom: 40px;
+  }
+
+  p {
+    margin: 20px auto;
+    max-width: 600px;
+    line-height: 1.4;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  #contact-page {
+    border: none;
+    margin-left: 25%;
+    margin-top: 5%;
+    width: 70%;
+  }
+}
