@@ -70,15 +70,15 @@ const FormComponent = ({
             placeholder='Price'
           />
         </div>
-        {/* <div>
+        <div>
           <input
             type='number'
-            name='distance'
+            name='distance_used'
             value={distance_used}
             onChange={onChange}
             placeholder='distance_used'
           />
-        </div> */}
+        </div>
         <div>
           <input
             name='where_purchased'

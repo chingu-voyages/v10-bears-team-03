@@ -14,7 +14,7 @@ const emptyAsset = {
   type: '',
   expire: '',
   price: '',
-  distance_used: '',
+  distance_used: 0,
   where_purchased: '',
   date_purchased: null,
   email:''
