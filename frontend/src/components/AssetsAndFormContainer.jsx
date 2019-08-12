@@ -3,7 +3,7 @@ import axios from 'axios';
 import moment from 'moment';
 import 'react-dates/initialize';
 
-import Navbar from '../components/Navbar';
+import Navbar from './Navbar';
 import FormComponent from './FormComponent';
 import AssetsListComponent from './AssetsListComponent';
 import { withFirebase } from '../firebase/context';
@@ -171,22 +171,7 @@ function AssetsAndFormContainerBase(props) {
               console.log("check userid", userId, user_id)
 
             })
-          
-          // axios.get(`/users/${userId}`)
-          // .then(response => {
-          //   const responseAssets = response.data;
-
-          //   let resp_data = responseAssets.UserTrackerGroup.map( e => {
-          //     return axios.get(`/userTrackers/more/${e}`)
-          //   })
             
-          //   Promise.all(resp_data).then(res =>{
-          //     let combined = res.map(res => {
-          //       return res.data
-          //     })
-          //     setInventory(combined)
-          //   });            
-          // });
         })
         .catch(error => console.log(error));
       });

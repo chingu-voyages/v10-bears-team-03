@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Navbar from '../components/Navbar';
+import Navbar from './Navbar';
 import { withFirebase } from '../firebase/context';
 
 const EmailLoginPageBase = props => {
