@@ -28,8 +28,8 @@ const userTrackerRoutes = require('./routes/API/userTrackers');
 
 
 mongoose.Promise = global.Promise;
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/tracker';
-
+// const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/tracker';
+const MONGODB_URI = "mongodb+srv://chanf123:chanf123@cluster0-fy09o.mongodb.net/test?retryWrites=true&w=majority"
 console.log("mongo test", MONGODB_URI)
 
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true })
