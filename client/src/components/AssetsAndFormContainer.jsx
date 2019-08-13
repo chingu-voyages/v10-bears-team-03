@@ -141,6 +141,7 @@ function AssetsAndFormContainerBase(props) {
         axios.get(`/users/${userId}`)
           .then(response => {
           const responseAssets = response.data;
+          console.log("heroku differnet response?", response)
 
           let resp_data = responseAssets.UserTrackerGroup.map( e => {
             return axios.get(`/userTrackers/more/${e}`)
