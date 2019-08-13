@@ -93,9 +93,18 @@ trackerRoutes.route('/delete/:id').delete(function (req, res) {
         }
     });
 });
-
+//very distructive for removing all things only.
 trackerRoutes.route('/deleteall/').delete(function (req, res){
   Tracker.remove({})
+  .then(() => {
+    UserTracker.remove({})
+    .then(() => {
+      User.remove({})
+      .then(() => {
+        res.status(400).send("remove all Tracker, User, and UserTracker");
+      })
+    })
+  })
 })
 
 module.exports = trackerRoutes;
