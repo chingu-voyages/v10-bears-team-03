@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const path = require("path")
 
 
+
 // const trackerRoutes = express.Router();
 const PORT = process.env.PORT || 4000;
 
@@ -28,10 +29,12 @@ const userTrackerRoutes = require('./routes/API/userTrackers');
 
 mongoose.Promise = global.Promise;
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/tracker';
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true }).then(
-    () => {console.log('Database is connected') },
-    err => { console.log('Can not connect to the database'+ err)}
-  );
+
+console.log("mongo test", MONGODB_URI)
+
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true })
+.then(() => console.log('MongoDB Connected'))
+.catch(err => console.log(err));
 
 const connection = mongoose.connection;
 connection.once('open', function() {
