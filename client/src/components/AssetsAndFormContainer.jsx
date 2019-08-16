@@ -27,15 +27,7 @@ function AssetsAndFormContainerBase(props) {
 
   const [isUpdating, setIsUpdating] = useState(false);
 
-  const fetchAssets = () => {
-    // axios
-    //   .get('/trackers')
-    //   .then(response => {
-    //     const responseAssets = response.data;
-    //     setInventory(responseAssets);
-    //   })
-    //   .catch(error => console.log(error));
-    
+  const fetchAssets = () => {    
     axios.get(`/users/${user_id.user_id}`)
       .then(response => {
       const responseAssets = response.data;
@@ -56,8 +48,6 @@ function AssetsAndFormContainerBase(props) {
   const onSubmit = e => {
     e.preventDefault();
     if (isUpdating) {
-      console.log("update post", {...asset, ...user_id})
-      console.log(asset)
       axios
         .post(`/userTrackers/update/${asset._id}`, {...asset, ...user_id})
         .then(response => {
@@ -73,7 +63,6 @@ function AssetsAndFormContainerBase(props) {
         .catch(error => console.log(error));
       
     } else {
-      console.log("add post", {...asset, ...user_id})
       axios.post('/trackers/add', {...asset, ...user_id})
         .then((res) => {
           axios
@@ -100,7 +89,6 @@ function AssetsAndFormContainerBase(props) {
   const onChange = e => {
     e.persist();
     setAsset(asset => ({ ...asset, [e.target.name]: e.target.value }));
-    console.log(asset)
   };
 
   const onDateChange = date_purchased => {
@@ -121,7 +109,6 @@ function AssetsAndFormContainerBase(props) {
             
             
           })
-          console.log("check asset onUpdate", asset)
       })
       .catch(error => console.log(error));
     
@@ -137,11 +124,9 @@ function AssetsAndFormContainerBase(props) {
         let userId = response.data._id;
         
         setUser_id(user_id => ({ ...user_id, user_id:userId }));
-        console.log("check userid", userId, user_id)
         axios.get(`/users/${userId}`)
           .then(response => {
           const responseAssets = response.data;
-          console.log("heroku differnet response?", response)
 
           let resp_data = responseAssets.UserTrackerGroup.map( e => {
             return axios.get(`/userTrackers/more/${e}`)
@@ -169,7 +154,6 @@ function AssetsAndFormContainerBase(props) {
             .then(resp => {
               let userId = resp.data._id;
               setUser_id(user_id => ({ ...user_id, user_id:userId }));
-              console.log("check userid", userId, user_id)
 
             })
             

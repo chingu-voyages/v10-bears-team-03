@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 
 const AssetsListComponent = ({ assets, onDelete, onUpdate, isUpdating }) => {
-  console.log(assets)
   return (
     <table className='asset_table'>
       <caption>Your Equipment</caption>
