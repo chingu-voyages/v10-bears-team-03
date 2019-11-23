@@ -28,13 +28,6 @@ function AssetsAndFormContainerBase(props) {
   const [isUpdating, setIsUpdating] = useState(false);
 
   const fetchAssets = () => {
-    // axios
-    //   .get('/trackers')
-    //   .then(response => {
-    //     const responseAssets = response.data;
-    //     setInventory(responseAssets);
-    //   })
-    //   .catch(error => console.log(error));
     
     axios.get(`/users/${user_id.user_id}`)
       .then(response => {
